@@ -1,0 +1,840 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Encourage Interactive Deck</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Eight-slide interactive presentation on the word Encourage: five gifts, twenty-five developmental actions, and a closing challenge.">
+<style>
+/* Layout: one-screen presentation. Top bar, stage, bottom controls.
+   Palette: navy and gold from the original deck, with a mist neutral.
+   Type: Source Serif 4 for headings, Source Sans 3 for body. */
+:root {
+  --bg: #ffffff;
+  --surface: #f2f4f7;
+  --fg: #1f2937;
+  --muted: #5b6573;
+  --navy: #1b2a41;
+  --navy-fg: #ffffff;
+  --navy-soft: #c8d0dc;
+  --gold: #8a6b10;
+  --gold-fill: #c9a227;
+  --line: #d9dee6;
+  --focus: #1f5c99;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1828;
+    --surface: #18243a;
+    --fg: #eef1f6;
+    --muted: #aab4c3;
+    --navy: #0a1220;
+    --navy-fg: #ffffff;
+    --navy-soft: #b9c4d6;
+    --gold: #e2c15a;
+    --gold-fill: #e2c15a;
+    --line: #2c3a52;
+    --focus: #8fb8e8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1828;
+  --surface: #18243a;
+  --fg: #eef1f6;
+  --muted: #aab4c3;
+  --navy: #0a1220;
+  --navy-fg: #ffffff;
+  --navy-soft: #b9c4d6;
+  --gold: #e2c15a;
+  --gold-fill: #e2c15a;
+  --line: #2c3a52;
+  --focus: #8fb8e8;
+  color-scheme: dark;
+}
+
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(8px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  min-width: 0;
+}
+h1, h2, h3, .serif {
+  font-family: "Source Serif 4", Cambria, Georgia, serif;
+  text-wrap: balance;
+  margin: 0;
+  line-height: 1.15;
+}
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 8px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: "Source Serif 4", Cambria, Georgia, serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  margin-right: auto;
+}
+.progress { display: flex; gap: 6px; align-items: center; }
+.progress button {
+  width: 22px; height: 22px;
+  border: 0; padding: 0; background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+}
+.progress button::before {
+  content: "";
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--line);
+  transition: background 200ms ease, transform 200ms ease;
+}
+.progress button[aria-current="step"]::before { background: var(--gold-fill); transform: scale(1.25); }
+.progress button:hover::before { background: var(--muted); }
+.tool {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Stage */
+.stage { position: relative; min-height: 0; min-width: 0; }
+.slide {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-block: 8px 16px;
+  min-width: 0;
+  animation: fade 260ms ease both;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Slide 1 */
+.cover {
+  height: 100%;
+  display: grid;
+  align-content: center;
+  gap: 20px;
+  max-width: 880px;
+}
+.cover .kicker { color: var(--gold); }
+.cover h1 { font-size: clamp(56px, 13vw, 124px); letter-spacing: -0.01em; }
+.cover .sub { font-size: clamp(20px, 3.4vw, 30px); color: var(--muted); font-family: "Source Serif 4", Georgia, serif; font-style: italic; }
+.cover .lead { max-width: 56ch; color: var(--fg); }
+.start {
+  justify-self: start;
+  margin-top: 8px;
+  background: var(--navy);
+  color: var(--navy-fg);
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 26px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.start:hover { filter: brightness(1.12); }
+
+/* Kicker and labels */
+.kicker {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* Slide 2 */
+.why { display: grid; gap: 20px; align-content: start; max-width: 880px; }
+.why h2 { font-size: clamp(30px, 5vw, 46px); }
+.scenario {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 22px 24px;
+  font-size: 19px;
+  max-width: 62ch;
+}
+.scenario strong { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; }
+.reveal-msg { font-size: 18px; max-width: 62ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  border: 2px solid var(--navy);
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: 999px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+.chip:hover { background: var(--navy); color: var(--navy-fg); }
+
+/* Reveal behavior */
+[data-stage] {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+[data-stage].is-in { opacity: 1; transform: none; }
+
+/* Gift slides */
+.gift-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  min-width: 0;
+}
+.gift-panel {
+  background: var(--navy);
+  color: var(--navy-fg);
+  border-radius: 16px;
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+.gift-panel .kicker { color: var(--gold-fill); }
+.gift-icon { width: 56px; height: 56px; color: var(--gold-fill); }
+.gift-icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.gift-panel h2 { font-size: clamp(34px, 6vw, 48px); }
+.gift-panel .def { font-size: 17px; color: var(--navy-soft); }
+.gift-panel .hook { font-family: "Source Serif 4", Georgia, serif; font-size: 22px; font-style: italic; }
+.gift-panel .hook span, .gift-panel .reflect span {
+  display: block;
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  font-style: normal;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold-fill);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.gift-panel .visual { font-size: 14px; color: var(--navy-soft); }
+.reflect {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 12px;
+  font-size: 16px;
+}
+.actions { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.actions .hint { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+.card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  min-width: 0;
+  width: 100%;
+}
+.card:hover { border-color: var(--navy); }
+.card .num {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--gold-fill);
+  color: #1b2a41;
+  display: grid; place-items: center;
+  font-weight: 700;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 18px;
+}
+.card .ctext { display: grid; gap: 4px; min-width: 0; }
+.card strong { font-size: 17px; line-height: 1.3; }
+.card .ctext > span { font-size: 15px; color: var(--muted); overflow-wrap: anywhere; }
+.card.is-in { border-color: var(--line); }
+
+/* Slide 8 */
+.close { display: grid; gap: 18px; align-content: start; max-width: 880px; }
+.close h2 { font-size: clamp(34px, 6vw, 50px); }
+.pick { display: flex; flex-wrap: wrap; gap: 10px; }
+.pick button, .pick-action {
+  border: 2px solid var(--navy);
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+}
+.pick button[aria-pressed="true"] { background: var(--navy); color: var(--navy-fg); }
+.pick-action { font-weight: 500; font-size: 16px; max-width: 100%; }
+.pick-action[aria-pressed="true"] { background: var(--gold-fill); border-color: var(--gold-fill); color: #1b2a41; }
+.pick-actions { display: grid; gap: 8px; }
+.commit {
+  background: var(--surface);
+  border-left: 0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  font-size: 18px;
+  min-height: 3.2em;
+}
+.commit strong { font-family: "Source Serif 4", Georgia, serif; font-size: 20px; }
+.closing {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: clamp(22px, 4vw, 30px);
+  font-style: italic;
+  color: var(--gold);
+  max-width: 34ch;
+}
+
+/* Practice quiz (supplementary) */
+.quiz { display: grid; gap: 16px; align-content: start; max-width: 760px; }
+.quiz h2 { font-size: clamp(26px, 4.5vw, 36px); }
+.qcount { font-size: 15px; color: var(--muted); font-weight: 600; }
+.qq { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(22px, 3.6vw, 28px); line-height: 1.25; }
+.qopts { display: grid; gap: 10px; }
+.qopt {
+  text-align: left;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 17px;
+}
+.qopt:hover { border-color: var(--navy); }
+.qopt[data-state="right"] { border-color: var(--navy); background: var(--navy); color: var(--navy-fg); font-weight: 600; }
+.qopt[data-state="wrong"] { border-style: dashed; border-color: var(--muted); }
+.qfeed { background: var(--surface); border-radius: 12px; padding: 14px 16px; font-size: 16px; min-height: 3em; }
+.qfeed strong { display: block; margin-bottom: 4px; }
+.qend { background: var(--surface); border-radius: 14px; padding: 22px; display: grid; gap: 12px; }
+
+/* Bottom controls */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 10px;
+  min-width: 0;
+}
+.controls .count { font-size: 15px; color: var(--muted); }
+.nav {
+  border: 1px solid var(--navy);
+  background: var(--navy);
+  color: var(--navy-fg);
+  border-radius: 10px;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  min-width: 96px;
+}
+.nav.ghost { background: var(--bg); color: var(--fg); border-color: var(--line); }
+.nav:disabled { opacity: 0.4; cursor: default; }
+
+/* Menu and notes overlays */
+.sheet {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 18, 32, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 10;
+}
+.sheet-box {
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 86%;
+  overflow-y: auto;
+  display: grid;
+  gap: 12px;
+}
+.menu-list { display: grid; gap: 8px; }
+.menu-list button {
+  text-align: left;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.menu-list button:hover { border-color: var(--navy); }
+.notes-body { font-size: 16px; display: grid; gap: 12px; }
+.notes-body .cue { background: var(--surface); border-radius: 10px; padding: 12px 14px; font-size: 15px; }
+.notes-body .cue span { font-weight: 700; color: var(--gold); text-transform: uppercase; font-size: 12px; letter-spacing: 0.1em; display: block; margin-bottom: 4px; }
+
+@media (min-width: 760px) {
+  .gift-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: stretch; }
+  .gift-panel { padding: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">Encourage</div>
+    <nav class="progress" id="progress" aria-label="Slides"></nav>
+    <button class="tool" id="menuBtn" type="button" aria-haspopup="dialog">Menu</button>
+    <button class="tool" id="notesBtn" type="button" aria-expanded="false">Presenter notes</button>
+  </header>
+
+  <main class="stage" id="stage">
+    <!-- Slide 1: Title -->
+    <section class="slide" data-slide="0" data-max="0" aria-label="Title">
+      <div class="cover">
+        <p class="kicker">Cycle 60 Planetary Responsibility</p>
+        <h1>Encourage</h1>
+        <p class="sub">Five gifts. Twenty-five actions. One choice.</p>
+        <p class="lead">Encouragement is not only something we say. It is something we show through how we understand people, build their confidence, earn their trust, share knowledge, and communicate.</p>
+        <button class="start" type="button" data-goto="1">Start the experience</button>
+      </div>
+    </section>
+
+    <!-- Slide 2: Why it matters -->
+    <section class="slide" data-slide="1" data-max="2" aria-label="Why it matters" hidden>
+      <div class="why">
+        <p class="kicker">Why it matters</p>
+        <h2>Think of the last time someone believed in you first.</h2>
+        <div class="scenario">
+          <strong>Pause and reflect.</strong> Who said something that helped you move forward when you were stuck? What did they say, and what did you do next?
+        </div>
+        <p class="reveal-msg" data-stage="1">Encouragement changes outcomes. People speak up sooner, take smarter risks, and recover faster from mistakes. Encouragement is not soft. It is leadership with a purpose.</p>
+        <div class="chips" data-stage="2" role="group" aria-label="Five gifts">
+          <button class="chip" type="button" data-gift="2">Empathy</button>
+          <button class="chip" type="button" data-gift="3">Confidence</button>
+          <button class="chip" type="button" data-gift="4">Trust</button>
+          <button class="chip" type="button" data-gift="5">Knowledge</button>
+          <button class="chip" type="button" data-gift="6">Communication</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slides 3-7: Gifts (rendered from data below) -->
+    <div id="gifts"></div>
+
+    <!-- Slide 8: Challenge -->
+    <section class="slide" data-slide="7" data-max="0" aria-label="Your challenge" hidden>
+      <div class="close">
+        <p class="kicker">Your challenge</p>
+        <h2>Which gift do you most want to strengthen?</h2>
+        <div class="pick" id="pickGifts" role="group" aria-label="Choose a gift"></div>
+        <div class="pick-actions" id="pickActions" role="group" aria-label="Choose one action to practice today"></div>
+        <div class="commit" id="commit" aria-live="polite">Choose a gift, then choose one action to practice today.</div>
+        <p class="closing">Encouragement is a practice, not a personality. Go encourage someone today.</p>
+        <button class="nav ghost" type="button" data-goto="8" style="justify-self:start">Take the practice quiz</button>
+      </div>
+    </section>
+
+    <!-- Supplementary: practice quiz, after the eight narrated slides -->
+    <section class="slide" data-slide="8" data-max="0" aria-label="Practice quiz" hidden>
+      <div class="quiz">
+        <p class="kicker">Supplementary: practice quiz</p>
+        <p class="qcount" id="qcount" aria-live="polite"></p>
+        <div id="quizHost"></div>
+        <div class="qend" id="qend" hidden>
+          <h2>Five gifts. One choice this week.</h2>
+          <p>Each gift is something you practice on purpose. Pick the gift you most want to strengthen, choose one action, and start it today.</p>
+          <button class="nav ghost" type="button" data-goto="7" style="justify-self:start">Back to your challenge</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="nav ghost" id="prevBtn" type="button">Previous</button>
+    <span class="count" id="count" aria-live="polite"></span>
+    <button class="nav" id="nextBtn" type="button">Next</button>
+  </footer>
+</div>
+
+<div class="sheet" id="menu" role="dialog" aria-modal="true" aria-label="Slide menu" hidden>
+  <div class="sheet-box">
+    <h2 style="font-size:24px">Jump to a slide</h2>
+    <div class="menu-list" id="menuList"></div>
+    <button class="nav ghost" type="button" data-close>Close</button>
+  </div>
+</div>
+
+<div class="sheet" id="notes" role="dialog" aria-modal="true" aria-label="Presenter notes" hidden>
+  <div class="sheet-box">
+    <h2 style="font-size:24px">Presenter notes</h2>
+    <div class="notes-body" id="notesBody"></div>
+    <button class="nav ghost" type="button" data-close>Close</button>
+  </div>
+</div>
+
+<script>
+const ICONS = {
+  empathy: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="20" r="8"/><path d="M8 52c0-9 6-15 14-15s14 6 14 15"/><circle cx="44" cy="22" r="7"/><path d="M36 52c0-8 4-13 9-13 6 0 11 5 11 13"/></svg>',
+  confidence: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 54 26 20l10 16 6-8 16 26z"/><path d="M44 12v14l8-4"/></svg>',
+  trust: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 52 13v16c0 13-9 22-20 27-11-5-20-14-20-27V13z"/><path d="m23 32 6 6 12-12"/></svg>',
+  knowledge: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 16c-6-5-14-6-24-5v36c10-1 18 0 24 5 6-5 14-6 24-5V11c-10-1-18 0-24 5z"/><path d="M32 16v36"/></svg>',
+  communication: '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 14h36v24H24l-10 9v-9H8z"/><path d="M48 24h8v22h-4v8l-9-8H26v-6"/></svg>'
+};
+
+const GIFTS = [
+  {
+    name: 'Empathy', icon: ICONS.empathy,
+    def: 'Empathy means understanding what someone feels and letting them know you see it. When you encourage with empathy, people feel heard before they feel pushed.',
+    hook: 'Feel first, then fix.',
+    visual: 'A program manager at a small table, listening beside an open notebook. Warm amber and sage tones.',
+    reflect: 'Who in your life noticed how you were feeling before you said a word?',
+    actions: [
+      { t: 'Ask one open question in each one-on-one, then wait five seconds.', h: 'Try: "What part of this feels hardest right now?"' },
+      { t: 'Name the feeling you hear before offering advice.', h: 'Say "That sounds frustrating" and let the person confirm or correct you.' },
+      { t: 'Shadow a teammate for one hour and note what slows them down.', h: 'Ask permission first, then watch without fixing anything.' },
+      { t: 'Reach out privately to the person who went quiet.', h: 'Send a short note: "I noticed you were quiet today. Is everything okay?"' },
+      { t: 'Ask "What would help most right now?" before you decide how to support someone.', h: 'Write their answer down and act on it that day.' }
+    ],
+    narr: 'Gift one is Empathy. Empathy means you understand what someone feels, and you let them know you see it. Here is the memory hook: Feel first, then fix. Picture a program manager at a small table, listening with an open notebook. Now, five actions to build this gift. First, ask one open question in every one-on-one, then wait five seconds. Second, name the feeling you hear before you offer advice. Third, shadow a teammate for one hour. Fourth, reach out privately to someone who went quiet. Fifth, ask what would help most before you decide. Start with one of these this week.',
+    cue: 'Read the hook aloud. Reveal each action as you narrate it. After action three, pause and ask: which of these have you already done?'
+  },
+  {
+    name: 'Confidence', icon: ICONS.confidence,
+    def: 'Confidence is the steady belief that you can do the work before you have proof. When you encourage with confidence, you help people see the strength they already carry.',
+    hook: 'Stand tall, start small.',
+    visual: 'A trainer beside a climber at the base of a rock wall, pointing upward. Deep blue and orange tones.',
+    reflect: 'What is one ability you have that you rarely give yourself credit for?',
+    actions: [
+      { t: 'Name one specific strength you saw in someone’s work and tell them today.', h: 'Say what they did, not just "good job."' },
+      { t: 'Break a big goal into a first step under 20 minutes, then start it together.', h: 'Set a timer and work side by side.' },
+      { t: 'Set a 10-minute practice block for a skill a teammate wants to build.', h: 'Pick one drill and repeat it at the same time each day.' },
+      { t: 'Celebrate a small win within 24 hours.', h: 'Mention it in a group message with one concrete detail.' },
+      { t: 'Replace "You can’t" with "What would it take?" in one conversation this week.', h: 'Ask the question, then listen for the first step they name.' }
+    ],
+    narr: 'Gift two is Confidence. Confidence is the steady belief that you can do the work before you have proof. Here is the memory hook: Stand tall, start small. Picture a trainer beside a climber at the base of a wall, pointing upward with a firm nod. Here are five actions. First, name one specific strength you saw in someone’s work. Second, break a big goal into a first step under twenty minutes. Third, set a ten-minute practice block for a skill. Fourth, celebrate a small win within twenty-four hours. Fifth, replace You can’t with What would it take? Pick one action and do it before the week ends.',
+    cue: 'Ask for a show of hands: who has ever been told "you can’t" and proved them wrong? Keep it brief, then reveal the actions.'
+  },
+  {
+    name: 'Trust', icon: ICONS.trust,
+    def: 'Trust is the belief that someone will be honest, consistent, and safe with you. When you encourage with trust, you give people a reason to believe you will keep your word.',
+    hook: 'Keep the promise, keep the bond.',
+    visual: 'A doctor kneeling beside a patient in a bright clinic room, sharing steady eye contact. Clean white and teal tones.',
+    reflect: 'Who keeps their word with you, and what do they do that earns it?',
+    actions: [
+      { t: 'Keep every small promise this week and log each one.', h: 'Write the promise, the due date, and a checkmark when it is done.' },
+      { t: 'Admit one mistake out loud when you make it.', h: 'Say what happened, what you will change, and when you will report back.' },
+      { t: 'Follow up on a commitment before the deadline you gave.', h: 'Send a status update even if the news is not final.' },
+      { t: 'Share one piece of context people usually have to ask for.', h: 'Add it to the first message of your next project thread.' },
+      { t: 'Protect a private conversation by asking before you repeat it.', h: 'Ask first: "Is it okay if I mention this to ___?"' }
+    ],
+    narr: 'Gift three is Trust. Trust is the belief that someone will be honest, consistent, and safe with you. Here is the memory hook: Keep the promise, keep the bond. Picture a doctor kneeling beside a patient, sharing steady eye contact. Five actions. First, keep every small promise this week and log each one. Second, admit one mistake out loud, then say what you will change. Third, follow up before the deadline you gave. Fourth, share context people usually have to ask for. Fifth, ask permission before you repeat anything private. Trust grows in small, repeated moments, so start with the promise you can keep today.',
+    cue: 'Ask the room to name a promise they kept that mattered. Then reveal the actions and pick out the one that is easiest to start today.'
+  },
+  {
+    name: 'Knowledge', icon: ICONS.knowledge,
+    def: 'Knowledge is understanding built through study, practice, and good questions. When you encourage with knowledge, you help people grow the skills to solve problems on their own.',
+    hook: 'Learn it, teach it, own it.',
+    visual: 'A scientist and a construction worker reviewing a blueprint on a sunlit workbench. Cool slate and gold tones.',
+    reflect: 'What is one thing you learned by teaching someone else?',
+    actions: [
+      { t: 'Read one practical guide for 20 minutes and share its key takeaway.', h: 'Send three sentences that name the idea and why it matters.' },
+      { t: 'Teach one skill to one person in a five-minute walkthrough.', h: 'Show the steps, then have them repeat the steps back to you.' },
+      { t: 'Ask one "why" question in each meeting.', h: 'Try: "Why did we choose this approach over the others?"' },
+      { t: 'Start a shared notes page for a recurring problem.', h: 'Write the problem, the fix, and who to ask.' },
+      { t: 'Pair with an expert on one task and write down three things you learned.', h: 'Keep the notes in your own words so you can recall them later.' }
+    ],
+    narr: 'Gift four is Knowledge. Knowledge is understanding built through study, practice, and good questions. Here is the memory hook: Learn it, teach it, own it. Picture a scientist and a construction worker reviewing a blueprint together. Five actions. First, read one practical guide for twenty minutes, then share the takeaway. Second, teach one skill in a five-minute walkthrough. Third, ask one why question in each meeting. Fourth, start a shared notes page for a recurring problem. Fifth, pair with an expert and write down three things you learned. When you teach what you learn, you own it, and you help someone else grow too.',
+    cue: 'Invite one person to name a skill they could teach in five minutes. Then reveal the actions and link them to that skill.'
+  },
+  {
+    name: 'Communication', icon: ICONS.communication,
+    def: 'Communication is sharing a clear message in a way others can receive and act on. When you encourage with communication, your words lift people up and point them toward action.',
+    hook: 'Say it clear, say it kind.',
+    visual: 'A public speaker on a small stage, one hand open toward an engaged audience. Rich red and gold tones.',
+    reflect: 'Think of feedback that helped you. What made it land?',
+    actions: [
+      { t: 'Open each message with the main point in one sentence.', h: 'Put the request or answer first, then the details.' },
+      { t: 'Practice a two-minute talk, record it, and watch it back.', h: 'Note one thing to keep and one thing to change.' },
+      { t: 'Ask a teammate to restate your request in their own words.', h: 'Say: "Can you tell me what you heard so I know I was clear?"' },
+      { t: 'Use one specific, positive sentence in every piece of feedback.', h: 'Try: "Your ending landed clearly and kept the room engaged."' },
+      { t: 'Slow your speaking pace by about 10 percent and pause after key points.', h: 'Count to two silently after your main sentence.' }
+    ],
+    narr: 'Gift five is Communication. Communication is sharing a clear message in a way others can receive and act on. Here is the memory hook: Say it clear, say it kind. Five actions. First, open each message with the main point in one sentence. Second, record a two-minute talk and watch it back. Third, ask a teammate to restate your request in their own words. Fourth, use one specific, positive sentence in every piece of feedback. Fifth, slow your pace by about ten percent and pause after each key point. Clear words with a kind delivery is how encouragement becomes action.',
+    cue: 'Ask the room to share one piece of feedback that helped them. Reveal the actions, then point to the first one they could try this week.'
+  }
+];
+
+const TITLES = ['Title', 'Why it matters', 'Empathy', 'Confidence', 'Trust', 'Knowledge', 'Communication', 'Your challenge', 'Practice quiz'];
+const N = TITLES.length;
+const MAX = [0, 2, 5, 5, 5, 5, 5, 0, 0];
+const QUIZ = [
+  { gift: 'Empathy', q: 'Which action shows empathy most clearly?', opts: ['Give advice before the person finishes speaking', 'Ask what would help most before you decide', 'Change the subject to something lighter', 'Send a group message about the problem'], a: 1, why: 'Asking what would help most before you decide shows you are focused on the person, not on your own answer.' },
+  { gift: 'Confidence', q: 'Which action builds confidence?', opts: ['Point out every mistake right away', 'Replace "You can’t" with "What would it take?"', 'Wait a month before you celebrate a win', 'Skip the first step and aim for the finish line'], a: 1, why: 'That question invites a first step instead of shutting the idea down, so the person can see what they can do next.' },
+  { gift: 'Trust', q: 'Which action builds trust over time?', opts: ['Share a private story with the whole group', 'Promise more than you can deliver this week', 'Keep every small promise and log it', 'Follow up only after the deadline has passed'], a: 2, why: 'Consistent follow-through, tracked over time, is what helps people believe your word.' },
+  { gift: 'Knowledge', q: 'Which action helps a whole team grow its knowledge?', opts: ['Keep your notes private', 'Skip the guides to save time', 'Start a shared notes page for a recurring problem', 'Avoid asking questions in meetings'], a: 2, why: 'Shared notes help people solve repeated problems without starting from scratch each time.' },
+  { gift: 'Communication', q: 'Which action improves communication?', opts: ['Bury the main point in the last paragraph', 'Speak faster so the talk ends sooner', 'Open each message with the main point in one sentence', 'Avoid giving feedback to keep things calm'], a: 2, why: 'Leading with the main point helps the reader understand the message and know what to do next.' }
+];
+let qIdx = 0;
+const qState = new Array(QUIZ.length).fill(null);
+const SLIDE_NOTES = [
+  { narr: 'Welcome. Today we are talking about one word: Encourage. Encouragement is not a pep talk you give once a year. It is a set of skills you can practice on purpose. Think of it as the way we understand people, build their confidence, earn their trust, share what we know, and communicate with care. Over the next few minutes, you will meet five gifts, and for each one, five actions you can start this week. Click Start when you are ready. By the end, you will have a plan, not just an idea.', cue: 'Pause and let the word sit for three seconds. Then click Start.' },
+  { narr: 'Here is why this matters. Think about the last time someone believed in you before you believed in yourself. Maybe it was a coach, a teacher, or a friend. That moment probably changed what you did next. Teams work the same way. When people feel encouraged, they speak up sooner, take smarter risks, and recover faster from mistakes. Encouragement is not soft. It is leadership with a purpose. Now, let us look at the five gifts that make encouragement real: Empathy, Confidence, Trust, Knowledge, and Communication.', cue: 'Ask two or three people to share a moment aloud. Click once to reveal the core message, then again to reveal the five gifts.' },
+  null, null, null, null, null,
+  { narr: 'Here is your challenge, and it is a small one on purpose. Look at the five gifts you just saw. Choose the one you most want to strengthen. Then pick one action from that gift and practice it today. Write it on a sticky note and place it where you will see it every morning. Give yourself seven days, then report back to a mentor or teammate with one sentence: what you tried and what changed. Encouragement is a practice, not a personality. Five gifts, twenty-five actions, one choice. Go encourage someone today.', cue: 'Ask each person to pick one gift and one action. Give thirty seconds of silence, then click their choice together.' }
+];
+GIFTS.forEach((g, i) => { SLIDE_NOTES[i + 2] = { narr: g.narr, cue: g.cue }; });
+SLIDE_NOTES[8] = { narr: 'Supplementary practice quiz. This section sits after the eight narrated slides and is not part of the narration. Click an answer to reveal whether it is correct and why.', cue: 'Presenter-led option: read the question aloud, give the room ten seconds, then click an answer. Use the reveal button if you prefer to show the answer first.' };
+
+const stage = document.getElementById('stage');
+const giftsHost = document.getElementById('gifts');
+const reveal = new Array(N).fill(0);
+let cur = 0;
+
+function giftSection(g, idx) {
+  const n = idx - 1;
+  const cards = g.actions.map((a, k) =>
+    '<button class="card" type="button" data-stage="' + (k + 1) + '" data-action-reveal="' + (k + 1) + '">' +
+      '<span class="num">' + (k + 1) + '</span>' +
+      '<span class="ctext"><strong>' + a.t + '</strong><span>' + a.h + '</span></span>' +
+    '</button>').join('');
+  return '<section class="slide" data-slide="' + idx + '" data-max="5" aria-label="' + g.name + '" hidden>' +
+    '<div class="gift-grid">' +
+      '<div class="gift-panel">' +
+        '<div class="gift-icon">' + g.icon + '</div>' +
+        '<p class="kicker">Gift ' + (n) + ' of 5</p>' +
+        '<h2>' + g.name + '</h2>' +
+        '<p class="def">' + g.def + '</p>' +
+        '<p class="hook"><span>Memory hook</span>' + g.hook + '</p>' +
+        '<p class="visual">Visual: ' + g.visual + '</p>' +
+        '<div class="reflect"><span>Reflect</span>' + g.reflect + '</div>' +
+      '</div>' +
+      '<div class="actions">' +
+        '<p class="kicker">Five actions to practice this week</p>' +
+        '<p class="hint">Click a card or press Next to reveal the next action.</p>' +
+        cards +
+      '</div>' +
+    '</div>' +
+  '</section>';
+}
+giftsHost.innerHTML = GIFTS.map((g, i) => giftSection(g, i + 2)).join('');
+
+const slides = Array.from(stage.querySelectorAll('.slide'));
+slides.sort((a, b) => +a.dataset.slide - +b.dataset.slide);
+slides.forEach(s => stage.appendChild(s));
+
+const progress = document.getElementById('progress');
+TITLES.forEach((t, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('aria-label', (i + 1) + '. ' + t);
+  b.dataset.goto = i;
+  progress.appendChild(b);
+});
+
+const menuList = document.getElementById('menuList');
+TITLES.forEach((t, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = (i + 1) + '. ' + t;
+  b.dataset.goto = i;
+  menuList.appendChild(b);
+});
+
+const pickGifts = document.getElementById('pickGifts');
+const pickActions = document.getElementById('pickActions');
+const commit = document.getElementById('commit');
+GIFTS.forEach((g, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = g.name;
+  b.setAttribute('aria-pressed', 'false');
+  b.dataset.pickGift = i;
+  pickGifts.appendChild(b);
+});
+
+function chooseGift(i) {
+  pickGifts.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
+  pickActions.innerHTML = '';
+  GIFTS[i].actions.forEach((a, k) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick-action';
+    b.textContent = a.t;
+    b.setAttribute('aria-pressed', 'false');
+    b.dataset.pickAction = i + '-' + k;
+    pickActions.appendChild(b);
+  });
+  commit.textContent = 'Pick one action from ' + GIFTS[i].name + ' to practice today.';
+}
+
+function chooseAction(gi, ai) {
+  pickActions.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pickAction === gi + '-' + ai)));
+  const a = GIFTS[gi].actions[ai];
+  commit.innerHTML = '<strong>Today I will:</strong> ' + a.t + '<br>I will report back in seven days with one sentence about what changed.';
+}
+
+function applyStages() {
+  slides.forEach(s => {
+    const idx = +s.dataset.slide;
+    s.hidden = idx !== cur;
+    s.querySelectorAll('[data-stage]').forEach(el => {
+      el.classList.toggle('is-in', +el.dataset.stage <= reveal[idx]);
+    });
+  });
+}
+
+function render() {
+  applyStages();
+  progress.querySelectorAll('button').forEach((b, i) => {
+    if (i === cur) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+  });
+  document.getElementById('count').textContent = cur < 8
+    ? 'Slide ' + (cur + 1) + ' of 8 - ' + TITLES[cur]
+    : 'Supplementary - ' + TITLES[cur];
+  if (cur === 8) renderQuiz();
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const atEnd = cur === 8 && qIdx === QUIZ.length - 1;
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = atEnd;
+  nextBtn.textContent = atEnd ? 'Done' : 'Next';
+  const notes = SLIDE_NOTES[cur];
+  document.getElementById('notesBody').innerHTML = notes
+    ? '<div class="cue"><span>Presenter cue</span>' + notes.cue + '</div><p>' + notes.narr + '</p>'
+    : '<p>No narration for this slide.</p>';
+  const target = slides.find(s => +s.dataset.slide === cur);
+  if (target) target.scrollTop = 0;
+}
+
+function go(n, mode) {
+  cur = Math.max(0, Math.min(N - 1, n));
+  reveal[cur] = mode === 'end' ? MAX[cur] : 0;
+  if (cur === 8) qIdx = mode === 'end' ? QUIZ.length - 1 : 0;
+  render();
+}
+
+function next() {
+  if (cur === 8) { if (qIdx < QUIZ.length - 1) { qIdx++; render(); } return; }
+  if (reveal[cur] < MAX[cur]) { reveal[cur]++; render(); return; }
+  if (cur < N - 1) go(cur + 1, 'start');
+}
+
+function prev() {
+  if (cur === 8 && qIdx > 0) { qIdx--; render(); return; }
+  if (cur > 0) go(cur - 1, 'end');
+}
+
+function renderQuiz() {
+  const host = document.getElementById('quizHost');
+  const q = QUIZ[qIdx];
+  const st = qState[qIdx];
+  document.getElementById('qcount').textContent = 'Question ' + (qIdx + 1) + ' of ' + QUIZ.length + ' - ' + q.gift;
+  let html = '<p class="qq">' + q.q + '</p><div class="qopts" role="group" aria-label="Answer options">';
+  q.opts.forEach((o, i) => {
+    let state = '';
+    if (st !== null) {
+      if (i === q.a) state = 'right';
+      else if (i === st && st !== q.a) state = 'wrong';
+    }
+    html += '<button class="qopt" type="button" data-qopt="' + i + '"' + (state ? ' data-state="' + state + '"' : '') + '>' +
+      String.fromCharCode(65 + i) + '. ' + o + (state === 'right' ? ' (correct)' : state === 'wrong' ? ' (your choice)' : '') +
+      '</button>';
+  });
+  html += '</div>';
+  html += '<div class="qfeed" role="status">';
+  if (st === null) {
+    html += '<button class="nav ghost" type="button" data-reveal-q="1">Reveal answer</button>';
+  } else {
+    const verdict = st === q.a ? 'Correct.' : 'Not quite. The correct answer is ' + String.fromCharCode(65 + q.a) + '.';
+    html += '<strong>' + verdict + '</strong>' + q.why;
+  }
+  html += '</div>';
+  host.innerHTML = html;
+  document.getElementById('qend').hidden = !(qIdx === QUIZ.length - 1 && qState[qIdx] !== null);
+}
+
+function answerQ(i) {
+  if (qState[qIdx] === null) { qState[qIdx] = i; renderQuiz(); }
+}
+
+function revealQ() {
+  if (qState[qIdx] === null) { qState[qIdx] = QUIZ[qIdx].a; renderQuiz(); }
+}
+
+function revealTo(k) {
+  if (k > reveal[cur]) { reveal[cur] = k; render(); }
+}
+
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button');
+  if (!t) return;
+  if (t.dataset.goto !== undefined && !t.closest('.sheet')) { go(+t.dataset.goto, 'start'); return; }
+  if (t.dataset.goto !== undefined && t.closest('.sheet')) { go(+t.dataset.goto, 'start'); closeSheets(); return; }
+  if (t.dataset.gift !== undefined) { go(+t.dataset.gift, 'start'); return; }
+  if (t.dataset.actionReveal !== undefined) { revealTo(+t.dataset.actionReveal); return; }
+  if (t.dataset.pickGift !== undefined) { chooseGift(+t.dataset.pickGift); return; }
+  if (t.dataset.pickAction !== undefined) { const [g, a] = t.dataset.pickAction.split('-').map(Number); chooseAction(g, a); return; }
+  if (t.dataset.qopt !== undefined) { answerQ(+t.dataset.qopt); return; }
+  if (t.dataset.revealQ !== undefined) { revealQ(); return; }
+  if (t.hasAttribute('data-close')) { closeSheets(); return; }
+});
+
+function openSheet(id, btn) {
+  document.getElementById(id).hidden = false;
+  btn.setAttribute('aria-expanded', 'true');
+}
+function closeSheets() {
+  document.getElementById('menu').hidden = true;
+  document.getElementById('notes').hidden = true;
+  document.getElementById('notesBtn').setAttribute('aria-expanded', 'false');
+}
+document.getElementById('menuBtn').addEventListener('click', () => openSheet('menu', document.getElementById('menuBtn')));
+document.getElementById('notesBtn').addEventListener('click', () => {
+  if (document.getElementById('notes').hidden) openSheet('notes', document.getElementById('notesBtn'));
+  else closeSheets();
+});
+
+window.addEventListener('keydown', e => {
+  const sheetOpen = !document.getElementById('menu').hidden || !document.getElementById('notes').hidden;
+  if (e.key === 'Escape') { closeSheets(); return; }
+  if (sheetOpen) return;
+  const onButton = e.target.tagName === 'BUTTON';
+  if (onButton && (e.key === ' ' || e.key === 'Enter')) return;
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+  else if (e.key === 'h' || e.key === 'H') { go(0, 'start'); }
+  else if (e.key === 'm' || e.key === 'M') { openSheet('menu', document.getElementById('menuBtn')); }
+  else if (e.key === 'n' || e.key === 'N') { document.getElementById('notesBtn').click(); }
+});
+
+go(0, 'start');
+</script>
+
+</body></html>
