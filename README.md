@@ -1,0 +1,55 @@
+Encourage: Cycle 60 Planetary Responsibility
+
+Andrew Thomas, i.c.stars Cycle 60
+
+What this project is
+
+This project covers the assigned word Encourage. It explains five gifts that show encouragement in action: Empathy, Confidence, Trust, Knowledge, and Communication. Each gift has a definition, a memory hook, a visual idea, and five developmental actions, for 25 actions in total. The material is meant to be presented to cohort learners and mentors, or recorded as a narrated video.
+
+Encouragement is not only something we say. It is something we show through how we understand people, build their confidence, earn their trust, share what we know, and communicate.
+
+What's in the project
+
+1. Planning document (Docs) Encourage: Gifts, Actions and Video Deck
+
+This is the master copy of the content. It has five sections:
+
+Five Gifts: definition, memory hook, and image concept for each gift
+Twenty-Five Developmental Actions: five actions per gift, each with a how-to line
+Narrated Deck Script: eight slides with on-screen text, visual direction, and narration
+Practice Quiz: five questions with an answer key
+
+2. Slide deck (PowerPoint) Encourage_Deck.pptx
+
+An eight-slide static deck with on-screen text and speaker notes. It can be imported into Canva. Animations and click interactions are not included, and the photos still need to be added.
+
+3. Interactive web presentation Encourage interactive presentation
+
+A browser-based version of the same content. It has click-to-reveal action cards, a reflection prompt, a challenge slide where the audience picks a gift and an action, and a supplementary practice quiz. Presenter notes hold the narration and presenter cues. The source file is encourage_interactive.html.
+
+Slide sequence (the eight narrated slides)
+Slide	Title	On-screen focus	Narration
+1	Title	Encourage, five gifts, one choice	About 93 words
+2	Why It Matters	Reflection on a moment someone believed in you, then the five gifts	About 86 words
+3	Empathy	Feel first, then fix	About 102 words
+4	Confidence	Stand tall, start small	About 108 words
+5	Trust	Keep the promise, keep the bond	About 105 words
+6	Knowledge	Learn it, teach it, own it	About 104 words
+7	Communication	Say it clear, say it kind	About 100 words
+8	Your Challenge	Pick one gift and one action for today	About 93 words
+
+The practice quiz comes after the eight narrated slides. It is supplementary and not part of the narration.
+
+How to present the interactive version
+Move forward: click Next, or press the right arrow, Space, or Enter.
+Move back: click Previous, or press the left arrow.
+Go home: press H.
+Jump to a slide: click Menu or press M, then choose a slide. You can also click the dots at the top.
+Reveal actions: on a gift slide, click a card or press Next to reveal the next action. Reveal all five before you move on.
+Presenter notes: click Presenter notes or press N. The notes show the narration and a cue for each slide, such as when to pause or ask the audience a question.
+Practice quiz: choose an answer to see whether it is correct and why. Use Reveal answer if you want to show the answer first.
+Presenter cues to remember
+Slide 1: pause and let the word sit for three seconds before you click Start.
+Slide 2: ask two or three people to share a moment aloud. Then reveal the core message, and reveal the five gifts.
+Gift slides: read the memory hook aloud, then reveal each action as you narrate it. After action three, pause and ask which actions people already do.
+Slide 8: give the room thirty seconds of silence to choose a gift and an action before you click it together.
