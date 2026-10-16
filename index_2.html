@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Encourage Interactive Deck</title>
+<meta name="description" content="Eight-slide interactive presentation on the word Encourage: five gifts, twenty-five developmental actions, and a closing challenge.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,600;0,700;1,400;1,600&display=swap">
+<style>
+/* Layout: one-screen presentation. Top bar, stage, bottom controls.
+   Palette: navy and gold from the original deck, with a mist neutral.
+   Type: Source Serif 4 for headings, Source Sans 3 for body. */
+:root {
+  --bg: #ffffff;
+  --surface: #f2f4f7;
+  --fg: #1f2937;
+  --muted: #5b6573;
+  --navy: #1b2a41;
+  --navy-fg: #ffffff;
+  --navy-soft: #c8d0dc;
+  --gold: #8a6b10;
+  --gold-fill: #c9a227;
+  --line: #d9dee6;
+  --focus: #1f5c99;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1828;
+    --surface: #18243a;
+    --fg: #eef1f6;
+    --muted: #aab4c3;
+    --navy: #0a1220;
+    --navy-fg: #ffffff;
+    --navy-soft: #b9c4d6;
+    --gold: #e2c15a;
+    --gold-fill: #e2c15a;
+    --line: #2c3a52;
+    --focus: #8fb8e8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1828;
+  --surface: #18243a;
+  --fg: #eef1f6;
+  --muted: #aab4c3;
+  --navy: #0a1220;
+  --navy-fg: #ffffff;
+  --navy-soft: #b9c4d6;
+  --gold: #e2c15a;
+  --gold-fill: #e2c15a;
+  --line: #2c3a52;
+  --focus: #8fb8e8;
+  color-scheme: dark;
+}
+
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(8px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  min-width: 0;
+}
+h1, h2, h3 {
+  font-family: "Source Serif 4", Cambria, Georgia, serif;
+  text-wrap: balance;
+  margin: 0;
+  line-height: 1.15;
+}
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* Illustrations */
+.art { width: 100%; max-width: 100%; position: relative; cursor: pointer; }
+.art > svg { display: block; width: 100%; height: auto; border-radius: 18px; }
+.art-play { position: absolute; right: 10px; bottom: 10px; display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: 999px; padding: 6px 12px; background: rgba(27, 42, 65, 0.88); color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer; }
+.art-play svg { width: 11px; height: 11px; fill: currentColor; }
+.art-play:hover { background: rgba(27, 42, 65, 1); }
+
+/* Animated scenes: each plays like a short clip when its slide opens */
+.art svg [class*="a-"] { transform-box: fill-box; transform-origin: center; }
+.art svg .a-origin-bl { transform-origin: left bottom; }
+.art svg .a-type, .art svg .a-wave { transform-origin: left center; }
+.art svg .a-draw { stroke-dasharray: 1; }
+.art.play .a-in-left { animation: art-in-left 0.9s cubic-bezier(.2,.7,.2,1) var(--d, 0s) both; }
+.art.play .a-in-right { animation: art-in-right 0.9s cubic-bezier(.2,.7,.2,1) var(--d, 0.15s) both; }
+.art.play .a-pop { animation: art-pop 0.6s ease-out var(--d, 0s) both; }
+.art.play .a-fade { animation: art-fade 0.6s ease-out var(--d, 0s) both; }
+.art.play .a-drop { animation: art-drop 0.8s cubic-bezier(.2,.8,.2,1) var(--d, 0s) both; }
+.art.play .a-draw { animation: art-draw 0.7s ease-out var(--d, 0s) both; }
+.art.play .a-type { animation: art-type 0.55s ease-out var(--d, 0s) both; }
+.art.play .a-rise { animation: art-rise 0.9s ease-out var(--d, 0s) both; }
+.art.play .a-bob { animation: art-bob 0.7s ease-out var(--d, 0s) both; }
+.art.play .a-sun { animation: art-sun 1.2s ease-out both; }
+.art.play .a-step-up { animation: art-step-up 2.4s ease-in-out both; }
+.art.play .a-climb { animation: art-climb 2.6s ease-in-out both; }
+.art.play .a-heart { animation: art-pop 0.6s ease-out var(--d, 0s) both, art-beat 1.6s ease-in-out calc(var(--d, 0s) + 0.6s) infinite; }
+.art.play .a-dot { animation: art-dot 1s ease-in-out var(--d, 0s) infinite; }
+.art.play .a-bar { animation: art-bar 0.8s ease-in-out var(--d, 0s) infinite; }
+.art.play .a-wave { animation: art-wave 1.2s ease-in-out infinite; }
+.art.play .a-glow { animation: art-fade 0.4s ease-out var(--d, 0s) both, art-glow 2s ease-in-out calc(var(--d, 0s) + 0.4s) infinite; }
+.art.play .a-twinkle { animation: art-pop 0.5s ease-out var(--d, 0s) both, art-twinkle 2s ease-in-out calc(var(--d, 0s) + 0.5s) infinite; }
+@keyframes art-in-left { from { transform: translateX(-60px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes art-in-right { from { transform: translateX(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes art-pop { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes art-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes art-drop { from { transform: translateY(-60px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes art-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes art-type { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes art-rise { from { transform: translateY(70px); } to { transform: none; } }
+@keyframes art-bob { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes art-sun { from { transform: translateY(40px) scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes art-step-up { 0%, 25% { transform: translate(-105px, 40px); } 62% { transform: translate(-50px, -16px); } 85%, 100% { transform: none; } }
+@keyframes art-climb { 0% { transform: translateY(90px); } 30%, 45% { transform: translateY(55px); } 75%, 85% { transform: translateY(20px); } 100% { transform: none; } }
+@keyframes art-beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+@keyframes art-dot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+@keyframes art-bar { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.35); } }
+@keyframes art-wave { 0%, 100% { transform: skewY(0deg); } 50% { transform: skewY(-14deg); } }
+@keyframes art-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes art-twinkle { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.45); opacity: 0.5; } }
+
+/* Jobs where each gift shows up */
+.jobs { display: grid; gap: 8px; margin-bottom: 6px; }
+.job-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.job { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+.job-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: var(--gold-fill); display: grid; place-items: center; }
+.job-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.job-text { display: grid; gap: 2px; min-width: 0; }
+.job-text strong { font-size: 17px; line-height: 1.25; }
+.job-text span { font-size: 14px; color: var(--muted); }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; gap: 12px; padding-block: 8px; min-width: 0; flex-wrap: wrap; }
+.brand { font-family: "Source Serif 4", Cambria, Georgia, serif; font-weight: 700; font-size: 18px; letter-spacing: 0.02em; margin-right: auto; }
+.progress { display: flex; gap: 6px; align-items: center; }
+.progress button { width: 22px; height: 22px; border: 0; padding: 0; background: transparent; cursor: pointer; display: grid; place-items: center; }
+.progress button::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--line); transition: background 200ms ease, transform 200ms ease; }
+.progress button[aria-current="step"]::before { background: var(--gold-fill); transform: scale(1.25); }
+.progress button:hover::before { background: var(--muted); }
+.progress .sep { width: 1px; height: 14px; background: var(--line); margin-inline: 4px; }
+.tool { border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-size: 15px; }
+
+/* Stage */
+.stage { position: relative; min-height: 0; min-width: 0; }
+.slide { position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden; padding-block: 8px 16px; min-width: 0; animation: fade 260ms ease both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.kicker { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; color: var(--muted); }
+
+/* Slide 1 */
+.cover { min-height: 100%; display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; }
+.cover-text { display: grid; gap: 18px; min-width: 0; }
+.cover .kicker { color: var(--gold); }
+.cover-text { container-type: inline-size; }
+.cover h1 { font-size: clamp(44px, 11vw, 116px); font-size: clamp(40px, 18cqi, 116px); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.cover .sub { font-size: clamp(20px, 3vw, 28px); color: var(--muted); font-family: "Source Serif 4", Georgia, serif; font-style: italic; }
+.cover .lead { max-width: 52ch; }
+.cover .art { max-width: 520px; }
+.start { justify-self: start; margin-top: 6px; background: var(--navy); color: var(--navy-fg); border: 0; border-radius: 10px; padding: 14px 26px; font-size: 18px; font-weight: 600; cursor: pointer; }
+.start:hover { filter: brightness(1.12); }
+
+/* Slide 2 */
+.why { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: start; }
+.why-text { display: grid; gap: 18px; min-width: 0; }
+.why h2 { font-size: clamp(30px, 4.6vw, 44px); }
+.why .art { max-width: 460px; }
+.scenario { background: var(--surface); border-radius: 14px; padding: 20px 22px; font-size: 19px; max-width: 60ch; }
+.scenario strong { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; }
+.reveal-msg { font-size: 18px; max-width: 60ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { border: 2px solid var(--navy); background: var(--bg); color: var(--fg); border-radius: 999px; padding: 10px 18px; cursor: pointer; font-weight: 600; font-size: 16px; }
+.chip:hover { background: var(--navy); color: var(--navy-fg); }
+
+/* Reveal behavior */
+[data-stage] { opacity: 0; transform: translateY(8px); transition: opacity 260ms ease, transform 260ms ease; }
+[data-stage].is-in { opacity: 1; transform: none; }
+
+/* Gift slides */
+.gift-grid { display: grid; gap: 24px; grid-template-columns: 1fr; min-width: 0; }
+.gift-panel { background: var(--navy); color: var(--navy-fg); border-radius: 18px; padding: 22px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.gift-panel .art { max-width: 290px; }
+.gift-panel .kicker { color: var(--gold-fill); }
+.gift-panel h2 { font-size: clamp(34px, 5vw, 46px); }
+.gift-panel .def { font-size: 17px; color: var(--navy-soft); }
+.gift-panel .hook { font-family: "Source Serif 4", Georgia, serif; font-size: 24px; font-style: italic; }
+.gift-panel .hook span, .reflect span { display: block; font-family: "Source Sans 3", system-ui, sans-serif; font-style: normal; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold-fill); font-weight: 700; margin-bottom: 4px; }
+.reflect { border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 12px; font-size: 16px; }
+.actions { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.actions .hint { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+.card { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; cursor: pointer; min-width: 0; width: 100%; }
+.card:hover { border-color: var(--navy); }
+.card .num { width: 34px; height: 34px; border-radius: 50%; background: var(--gold-fill); color: #1b2a41; display: grid; place-items: center; font-weight: 700; font-family: "Source Serif 4", Georgia, serif; font-size: 18px; }
+.card .ctext { display: grid; gap: 2px; min-width: 0; }
+.card strong { font-size: 17px; line-height: 1.3; }
+.card .ctext > span { font-size: 15px; color: var(--muted); overflow-wrap: anywhere; }
+
+/* Slide 8 */
+.close { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: start; }
+.close-main { display: grid; gap: 16px; min-width: 0; }
+.close h2 { font-size: clamp(30px, 5vw, 46px); }
+.close .art { max-width: 380px; }
+.pick { display: flex; flex-wrap: wrap; gap: 10px; }
+.pick button, .pick-action { border: 2px solid var(--navy); background: var(--bg); color: var(--fg); border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 600; text-align: left; }
+.pick button[aria-pressed="true"] { background: var(--navy); color: var(--navy-fg); }
+.pick-action { font-weight: 500; font-size: 16px; max-width: 100%; }
+.pick-action[aria-pressed="true"] { background: var(--gold-fill); border-color: var(--gold-fill); color: #1b2a41; }
+.pick-actions { display: grid; gap: 8px; }
+.commit { background: var(--surface); border-radius: 14px; padding: 18px 20px; font-size: 18px; min-height: 3.2em; }
+.commit strong { font-family: "Source Serif 4", Georgia, serif; font-size: 20px; }
+.closing { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(22px, 3.6vw, 28px); font-style: italic; color: var(--gold); max-width: 34ch; }
+
+/* Practice quiz (supplementary) */
+.quiz { display: grid; gap: 16px; align-content: start; max-width: 760px; }
+.quiz h2 { font-size: clamp(26px, 4.5vw, 36px); }
+.qcount { font-size: 15px; color: var(--muted); font-weight: 600; }
+.qq { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(22px, 3.6vw, 28px); line-height: 1.25; }
+.qopts { display: grid; gap: 10px; }
+.qopt { text-align: left; border: 2px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 10px; padding: 12px 16px; cursor: pointer; font-size: 17px; }
+.qopt:hover { border-color: var(--navy); }
+.qopt[data-state="right"] { border-color: var(--navy); background: var(--navy); color: var(--navy-fg); font-weight: 600; }
+.qopt[data-state="wrong"] { border-style: dashed; border-color: var(--muted); }
+.qfeed { background: var(--surface); border-radius: 12px; padding: 14px 16px; font-size: 16px; min-height: 3em; }
+.qfeed strong { display: block; margin-bottom: 4px; }
+.qend { background: var(--surface); border-radius: 14px; padding: 22px; display: grid; gap: 12px; }
+
+/* Bottom controls */
+.controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; min-width: 0; }
+.controls .count { font-size: 15px; color: var(--muted); text-align: center; }
+.nav { border: 1px solid var(--navy); background: var(--navy); color: var(--navy-fg); border-radius: 10px; padding: 10px 18px; cursor: pointer; font-weight: 600; min-width: 96px; }
+.nav.ghost { background: var(--bg); color: var(--fg); border-color: var(--line); }
+.nav:disabled { opacity: 0.4; cursor: default; }
+
+/* Menu and notes overlays */
+.sheet { position: fixed; inset: 0; background: rgba(10, 18, 32, 0.55); display: grid; place-items: center; padding: 16px; z-index: 10; }
+.sheet-box { background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 16px; padding: 22px; max-width: 560px; width: 100%; max-height: 86%; overflow-y: auto; display: grid; gap: 12px; box-sizing: border-box; }
+.menu-list { display: grid; gap: 8px; }
+.menu-list button { text-align: left; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 10px; padding: 12px 14px; cursor: pointer; font-size: 16px; }
+.menu-list button:hover { border-color: var(--navy); }
+.menu-list .menu-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; margin-top: 6px; }
+.notes-body { font-size: 16px; display: grid; gap: 12px; }
+.notes-body .cue { background: var(--surface); border-radius: 10px; padding: 12px 14px; font-size: 15px; }
+.notes-body .cue span { font-weight: 700; color: var(--gold); text-transform: uppercase; font-size: 12px; letter-spacing: 0.1em; display: block; margin-bottom: 4px; }
+
+@media (min-width: 820px) {
+  .cover { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+  .why { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
+  .why .art { order: 2; }
+  .gift-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: start; }
+  .gift-panel { padding: 26px; }
+  .close { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">Encourage</div>
+    <nav class="progress" id="progress" aria-label="Slides"></nav>
+    <button class="tool" id="menuBtn" type="button" aria-haspopup="dialog">Menu</button>
+    <button class="tool" id="notesBtn" type="button" aria-expanded="false">Presenter notes</button>
+  </header>
+
+  <main class="stage" id="stage">
+    <!-- Slide 1: Title -->
+    <section class="slide" data-slide="0" aria-label="Title">
+      <div class="cover">
+        <div class="cover-text">
+          <p class="kicker">Cycle 60 Planetary Responsibility</p>
+          <h1>Encourage</h1>
+          <p class="sub">Five gifts. Twenty-five actions. One choice.</p>
+          <p class="lead">Encouragement is not only something we say. It is something we show through how we understand people, build their confidence, earn their trust, share knowledge, and communicate.</p>
+          <button class="start" type="button" data-goto="1">Start the experience</button>
+        </div>
+        <div class="art" data-illo="title"></div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Why it matters -->
+    <section class="slide" data-slide="1" aria-label="Why it matters" hidden>
+      <div class="why">
+        <div class="art" data-illo="why"></div>
+        <div class="why-text">
+          <p class="kicker">Why it matters</p>
+          <h2>Think of the last time someone believed in you first.</h2>
+          <div class="scenario"><strong>Pause and reflect.</strong> Who said something that helped you move forward when you were stuck? What did they say, and what did you do next?</div>
+          <p class="reveal-msg" data-stage="1">Encouragement changes outcomes. People speak up sooner, take smarter risks, and recover faster from mistakes. Encouragement is not soft. It is leadership with a purpose.</p>
+          <div class="chips" data-stage="2" role="group" aria-label="Five gifts">
+            <button class="chip" type="button" data-gift="2">Empathy</button>
+            <button class="chip" type="button" data-gift="3">Confidence</button>
+            <button class="chip" type="button" data-gift="4">Trust</button>
+            <button class="chip" type="button" data-gift="5">Knowledge</button>
+            <button class="chip" type="button" data-gift="6">Communication</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slides 3-7: Gifts (rendered from data below) -->
+    <div id="gifts"></div>
+
+    <!-- Slide 8: Challenge -->
+    <section class="slide" data-slide="7" aria-label="Your challenge" hidden>
+      <div class="close">
+        <div class="close-main">
+          <p class="kicker">Your challenge</p>
+          <h2>Which gift do you most want to strengthen?</h2>
+          <div class="pick" id="pickGifts" role="group" aria-label="Choose a gift"></div>
+          <div class="pick-actions" id="pickActions" role="group" aria-label="Choose one action to start today"></div>
+          <div class="commit" id="commit" aria-live="polite">Choose a gift, then choose one action and take the first step today.</div>
+          <p class="closing">Encouragement is a practice, not a personality. Go encourage someone today.</p>
+          <button class="nav ghost" type="button" data-goto="8" style="justify-self:start">Take the practice quiz</button>
+        </div>
+        <div class="art" data-illo="challenge"></div>
+      </div>
+    </section>
+
+    <!-- Supplementary: practice quiz, after the eight narrated slides -->
+    <section class="slide" data-slide="8" aria-label="Practice quiz" hidden>
+      <div class="quiz">
+        <p class="kicker">Supplementary: practice quiz</p>
+        <p class="qcount" id="qcount" aria-live="polite"></p>
+        <div id="quizHost"></div>
+        <div class="qend" id="qend" hidden>
+          <h2>Five gifts. One choice this week.</h2>
+          <p>Each gift grows through actions you schedule and finish. Pick the gift you most want to strengthen, choose one action, and take the first step today.</p>
+          <button class="nav ghost" type="button" data-goto="7" style="justify-self:start">Back to your challenge</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button class="nav ghost" id="prevBtn" type="button">Previous</button>
+    <span class="count" id="count" aria-live="polite"></span>
+    <button class="nav" id="nextBtn" type="button">Next</button>
+  </footer>
+</div>
+
+<div class="sheet" id="menu" role="dialog" aria-modal="true" aria-label="Slide menu" hidden>
+  <div class="sheet-box">
+    <h2 style="font-size:24px">Jump to a slide</h2>
+    <div class="menu-list" id="menuList"></div>
+    <button class="nav ghost" type="button" data-close>Close</button>
+  </div>
+</div>
+
+<div class="sheet" id="notes" role="dialog" aria-modal="true" aria-label="Presenter notes" hidden>
+  <div class="sheet-box">
+    <h2 style="font-size:24px">Presenter notes</h2>
+    <div class="notes-body" id="notesBody"></div>
+    <button class="nav ghost" type="button" data-close>Close</button>
+  </div>
+</div>
+
+<script>
+const ILLOS = {"title": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a climber steps up to meet a helping hand reaching down from the top step\"><defs><clipPath id=\"clip1\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip1)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><g class=\"a-sun\"><circle cx=\"330\" cy=\"70\" r=\"42\" fill=\"#F3DE8A\"/><circle cx=\"330\" cy=\"70\" r=\"28\" fill=\"#C9A227\"/></g><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><rect x=\"40\" y=\"226\" width=\"110\" height=\"40\" fill=\"#B9CBE0\"/><rect x=\"150\" y=\"186\" width=\"110\" height=\"80\" fill=\"#A7BDD8\"/><rect x=\"260\" y=\"146\" width=\"110\" height=\"120\" fill=\"#94AFCF\"/><g class=\"a-in-right\"><ellipse cx=\"305\" cy=\"148\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(305 146) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-50\" y2=\"-44\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-50\" cy=\"-44\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#2F7A7E\"/><line x1=\"12\" y1=\"-80\" x2=\"18\" y2=\"-42\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"18\" cy=\"-42\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#4A2C17\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#4A2C17\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#1C1410\"/></g></g><g class=\"a-step-up\"><ellipse cx=\"200\" cy=\"188\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(200 186) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-18\" y2=\"-44\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-18\" cy=\"-44\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#D2694F\"/><line x1=\"12\" y1=\"-80\" x2=\"55\" y2=\"-82\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"55\" cy=\"-82\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#B87A45\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#B87A45\"/><circle cx=\"0\" cy=\"-122\" r=\"8\" fill=\"#3B2414\"/><path d=\"M-14 -103 A14 14 0 0 1 14 -103 Q0 -97 -14 -103 Z\" fill=\"#3B2414\"/></g></g><g class=\"a-twinkle\" style=\"--d:1.6s\"><path d=\"M250 85 L252.1 89.9 L257 92 L252.1 94.1 L250 99 L247.9 94.1 L243 92 L247.9 89.9 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:0.4s\"><path d=\"M96 115 L97.5 118.5 L101 120 L97.5 121.5 L96 125 L94.5 121.5 L91 120 L94.5 118.5 Z\" fill=\"#2F7A7E\"/></g><g class=\"a-twinkle\" style=\"--d:1s\"><path d=\"M372 135 L373.5 138.5 L377 140 L373.5 141.5 L372 145 L370.5 141.5 L367 140 L370.5 138.5 Z\" fill=\"#C9A227\"/></g></g></svg>", "why": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: one person rests a hand on a friend\u2019s shoulder and a speech bubble appears that says You have got this\"><defs><clipPath id=\"clip2\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip2)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><g class=\"a-pop a-origin-bl\" style=\"--d:1.1s\"><rect x=\"40\" y=\"34\" width=\"190\" height=\"62\" rx=\"16\" fill=\"#FFFFFF\"/><path d=\"M110 94 L128 116 L134 94 Z\" fill=\"#FFFFFF\"/><text x=\"135\" y=\"73\" text-anchor=\"middle\" font-family=\"'Source Sans 3', Arial, Helvetica, sans-serif\" font-size=\"22\" font-weight=\"700\" fill=\"#1B2A41\">You've got this.</text></g><g class=\"a-in-left\"><ellipse cx=\"150\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(150 266) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#5B6573\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#5B6573\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-20\" y2=\"-42\" stroke=\"#1B2A41\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-20\" cy=\"-42\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#1B2A41\"/><line x1=\"12\" y1=\"-80\" x2=\"80\" y2=\"-86\" stroke=\"#1B2A41\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"80\" cy=\"-86\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#7B4A26\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#7B4A26\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#1C1410\"/></g></g><g class=\"a-in-right\"><ellipse cx=\"250\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(250 266) scale(-1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-22\" y2=\"-44\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-22\" cy=\"-44\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#C9A227\"/><line x1=\"12\" y1=\"-80\" x2=\"22\" y2=\"-44\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"22\" cy=\"-44\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#E0AC69\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#E0AC69\"/><path d=\"M-15 -104 A15 15 0 0 1 15 -104 L16 -82 L10 -82 L9 -100 L-9 -100 L-10 -82 L-16 -82 Z\" fill=\"#2A1A10\"/></g></g><g class=\"a-twinkle\" style=\"--d:1.6s\"><path d=\"M300 62 L302.4 67.6 L308 70 L302.4 72.4 L300 78 L297.6 72.4 L292 70 L297.6 67.6 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:0.6s\"><path d=\"M338 99 L339.5 102.5 L343 104 L339.5 105.5 L338 109 L336.5 105.5 L333 104 L336.5 102.5 Z\" fill=\"#2F7A7E\"/></g></g></svg>", "empathy": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: two people sit down at a small table, a speech bubble shows someone talking, and a gold heart beats between them as the other listens\"><defs><clipPath id=\"clip3\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip3)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><rect x=\"40\" y=\"226\" width=\"12\" height=\"40\" fill=\"#8E6240\"/><rect x=\"34\" y=\"214\" width=\"44\" height=\"12\" rx=\"4\" fill=\"#8E6240\"/><rect x=\"348\" y=\"226\" width=\"12\" height=\"40\" fill=\"#8E6240\"/><rect x=\"322\" y=\"214\" width=\"44\" height=\"12\" rx=\"4\" fill=\"#8E6240\"/><g class=\"a-in-left\"><g transform=\"translate(70 266) scale(1 1)\"><rect x=\"-12\" y=\"-50\" width=\"46\" height=\"13\" rx=\"6\" fill=\"#1B2A41\"/><rect x=\"24\" y=\"-50\" width=\"11\" height=\"50\" rx=\"5\" fill=\"#1B2A41\"/><rect x=\"24\" y=\"-5\" width=\"19\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-6\" y1=\"-84\" x2=\"58\" y2=\"-58\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"58\" cy=\"-58\" r=\"5.5\" fill=\"#9C5F33\"/><rect x=\"-16\" y=\"-96\" width=\"32\" height=\"54\" rx=\"13\" fill=\"#2F7A7E\"/><line x1=\"8\" y1=\"-84\" x2=\"66\" y2=\"-60\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"66\" cy=\"-60\" r=\"5.5\" fill=\"#9C5F33\"/><rect x=\"-5\" y=\"-102\" width=\"10\" height=\"9\" fill=\"#9C5F33\"/><g transform=\"translate(0 6)\"><circle cx=\"0\" cy=\"-110\" r=\"13.5\" fill=\"#9C5F33\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#1C1410\"/></g></g></g><g class=\"a-in-right\"><g transform=\"translate(330 266) scale(-1 1)\"><rect x=\"-12\" y=\"-50\" width=\"46\" height=\"13\" rx=\"6\" fill=\"#1B2A41\"/><rect x=\"24\" y=\"-50\" width=\"11\" height=\"50\" rx=\"5\" fill=\"#1B2A41\"/><rect x=\"24\" y=\"-5\" width=\"19\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><g transform=\"translate(0 6)\"><circle cx=\"0\" cy=\"-107\" r=\"18\" fill=\"#2C1B12\"/></g><line x1=\"-6\" y1=\"-84\" x2=\"52\" y2=\"-58\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"52\" cy=\"-58\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-16\" y=\"-96\" width=\"32\" height=\"54\" rx=\"13\" fill=\"#D2694F\"/><line x1=\"8\" y1=\"-84\" x2=\"62\" y2=\"-62\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"62\" cy=\"-62\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-5\" y=\"-102\" width=\"10\" height=\"9\" fill=\"#E0AC69\"/><g transform=\"translate(0 6)\"><circle cx=\"0\" cy=\"-110\" r=\"13.5\" fill=\"#E0AC69\"/></g></g></g><rect x=\"130\" y=\"204\" width=\"140\" height=\"10\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"146\" y=\"214\" width=\"8\" height=\"52\" fill=\"#1B2A41\"/><rect x=\"246\" y=\"214\" width=\"8\" height=\"52\" fill=\"#1B2A41\"/><rect x=\"146\" y=\"192\" width=\"36\" height=\"12\" rx=\"2\" fill=\"#FFFFFF\" transform=\"rotate(-6 164 198)\"/><line x1=\"150\" y1=\"197\" x2=\"176\" y2=\"194\" stroke=\"#D3DEEC\" stroke-width=\"2\"/><g class=\"a-pop a-origin-bl\" style=\"--d:0.9s\"><rect x=\"248\" y=\"54\" width=\"70\" height=\"40\" rx=\"14\" fill=\"#FFFFFF\"/><path d=\"M262 92 L258 108 L276 92 Z\" fill=\"#FFFFFF\"/><g class=\"a-dot\" style=\"--d:1.2s\"><circle cx=\"270\" cy=\"74\" r=\"4\" fill=\"#5B6573\"/></g><g class=\"a-dot\" style=\"--d:1.35s\"><circle cx=\"283\" cy=\"74\" r=\"4\" fill=\"#5B6573\"/></g><g class=\"a-dot\" style=\"--d:1.5s\"><circle cx=\"296\" cy=\"74\" r=\"4\" fill=\"#5B6573\"/></g></g><g class=\"a-heart\" style=\"--d:1.6s\"><path d=\"M200 150 C200 140 186 136 182 146 C178 136 164 140 164 150 C164 162 182 172 182 172 C182 172 200 162 200 150 Z\" fill=\"#C9A227\" transform=\"translate(18 -60)\"/></g></g></svg>", "confidence": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a climber pulls up the wall toward a waving flag while a coach points the way from the ground\"><defs><clipPath id=\"clip4\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip4)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><rect x=\"218\" y=\"40\" width=\"130\" height=\"226\" rx=\"6\" fill=\"#B9CBE0\"/><ellipse cx=\"240\" cy=\"230\" rx=\"8\" ry=\"6\" fill=\"#D2694F\"/><ellipse cx=\"300\" cy=\"210\" rx=\"8\" ry=\"6\" fill=\"#2F7A7E\"/><ellipse cx=\"262\" cy=\"180\" rx=\"8\" ry=\"6\" fill=\"#C9A227\"/><ellipse cx=\"322\" cy=\"150\" rx=\"8\" ry=\"6\" fill=\"#D2694F\"/><ellipse cx=\"250\" cy=\"128\" rx=\"8\" ry=\"6\" fill=\"#2F7A7E\"/><ellipse cx=\"312\" cy=\"96\" rx=\"8\" ry=\"6\" fill=\"#C9A227\"/><ellipse cx=\"270\" cy=\"70\" rx=\"8\" ry=\"6\" fill=\"#D2694F\"/><line x1=\"340\" y1=\"40\" x2=\"340\" y2=\"6\" stroke=\"#1B2A41\" stroke-width=\"4\"/><g class=\"a-wave\"><path d=\"M340 8 L372 16 L340 26 Z\" fill=\"#C9A227\"/></g><g class=\"a-climb\"><g transform=\"translate(286 236) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><circle cx=\"0\" cy=\"-107\" r=\"18\" fill=\"#1C1410\"/><line x1=\"-12\" y1=\"-80\" x2=\"-28\" y2=\"-130\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-28\" cy=\"-130\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#C9A227\"/><line x1=\"12\" y1=\"-80\" x2=\"28\" y2=\"-118\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"28\" cy=\"-118\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#4A2C17\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#4A2C17\"/></g></g><g class=\"a-in-left\"><ellipse cx=\"110\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(110 266) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-20\" y2=\"-42\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-20\" cy=\"-42\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#2F7A7E\"/><line x1=\"12\" y1=\"-80\" x2=\"70\" y2=\"-132\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"70\" cy=\"-132\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#B87A45\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#B87A45\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#24160C\"/></g></g><g class=\"a-twinkle\" style=\"--d:2.4s\"><path d=\"M178 89 L180.1 93.9 L185 96 L180.1 98.1 L178 103 L175.9 98.1 L171 96 L175.9 93.9 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:2.8s\"><path d=\"M160 136 L161.2 138.8 L164 140 L161.2 141.2 L160 144 L158.8 141.2 L156 140 L158.8 138.8 Z\" fill=\"#D2694F\"/></g></g></svg>", "trust": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a doctor and a patient walk toward each other and shake hands while a shield appears and a check mark draws itself\"><defs><clipPath id=\"clip5\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip5)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><g class=\"a-drop\" style=\"--d:0.2s\"><path d=\"M200 22 L262 44 L262 98 C262 140 232 166 200 180 C168 166 138 140 138 98 L138 44 Z\" fill=\"#1B2A41\"/><path d=\"M200 36 L250 54 L250 98 C250 132 226 154 200 166 C174 154 150 132 150 98 L150 54 Z\" fill=\"none\" stroke=\"#C9A227\" stroke-width=\"4\"/></g><path class=\"a-draw\" style=\"--d:1.4s\" pathLength=\"1\" d=\"M176 98 L194 116 L226 82\" fill=\"none\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"a-in-left\"><ellipse cx=\"150\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(150 266) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-20\" y2=\"-42\" stroke=\"#FFFFFF\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-20\" cy=\"-42\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#FFFFFF\" stroke=\"#D3DEEC\" stroke-width=\"2\"/><line x1=\"0\" y1=\"-88\" x2=\"0\" y2=\"-36\" stroke=\"#D3DEEC\" stroke-width=\"2\"/><path d=\"M-7 -88 Q-9 -70 0 -66 Q9 -70 7 -88\" fill=\"none\" stroke=\"#5B6573\" stroke-width=\"2.5\"/><circle cx=\"0\" cy=\"-64\" r=\"3.5\" fill=\"#5B6573\"/><line x1=\"12\" y1=\"-80\" x2=\"50\" y2=\"-82\" stroke=\"#FFFFFF\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"50\" cy=\"-82\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#7B4A26\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#7B4A26\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#1C1410\"/></g></g><g class=\"a-in-right\"><ellipse cx=\"250\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(250 266) scale(-1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#5B6573\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#5B6573\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-20\" y2=\"-42\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-20\" cy=\"-42\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#D2694F\"/><line x1=\"12\" y1=\"-80\" x2=\"50\" y2=\"-82\" stroke=\"#D2694F\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"50\" cy=\"-82\" r=\"5.5\" fill=\"#E0AC69\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#E0AC69\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#E0AC69\"/><path d=\"M-15 -104 A15 15 0 0 1 15 -104 L16 -82 L10 -82 L9 -100 L-9 -100 L-10 -82 L-16 -82 Z\" fill=\"#5A3518\"/></g></g><g class=\"a-pop\" style=\"--d:0.9s\"><circle cx=\"200\" cy=\"184\" r=\"9\" fill=\"#B87A45\"/></g><g class=\"a-twinkle\" style=\"--d:2s\"><path d=\"M82 63 L84.1 67.9 L89 70 L84.1 72.1 L82 77 L79.9 72.1 L75 70 L79.9 67.9 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:2.3s\"><path d=\"M318 60 L319.8 64.2 L324 66 L319.8 67.8 L318 72 L316.2 67.8 L312 66 L316.2 64.2 Z\" fill=\"#2F7A7E\"/></g></g></svg>", "knowledge": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a mentor points at a screen as lines of code type out and a lightbulb glows, while a learner takes notes\"><defs><clipPath id=\"clip6\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip6)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"266\" width=\"400\" height=\"34\" fill=\"#D3DEEC\"/><rect x=\"140\" y=\"26\" width=\"230\" height=\"134\" rx=\"12\" fill=\"#1B2A41\"/><g class=\"a-fade\" style=\"--d:0.3s\"><text x=\"164\" y=\"66\" font-family=\"'Source Sans 3', Arial, Helvetica, sans-serif\" font-size=\"26\" font-weight=\"700\" fill=\"#C9A227\">&lt;/&gt;</text></g><g class=\"a-type\" style=\"--d:0.7s\"><rect x=\"164\" y=\"84\" width=\"120\" height=\"10\" rx=\"5\" fill=\"#2F7A7E\"/></g><g class=\"a-type\" style=\"--d:1.3s\"><rect x=\"164\" y=\"104\" width=\"160\" height=\"10\" rx=\"5\" fill=\"#7FA6C9\"/></g><g class=\"a-type\" style=\"--d:1.9s\"><rect x=\"164\" y=\"124\" width=\"96\" height=\"10\" rx=\"5\" fill=\"#D2694F\"/></g><g class=\"a-glow\" style=\"--d:2.4s\"><circle cx=\"336\" cy=\"62\" r=\"18\" fill=\"#F3DE8A\"/><rect x=\"329\" y=\"80\" width=\"14\" height=\"10\" rx=\"3\" fill=\"#F3DE8A\"/></g><g class=\"a-in-left\"><ellipse cx=\"100\" cy=\"268\" rx=\"26\" ry=\"5\" fill=\"#1B2A41\" opacity=\"0.12\"/><g transform=\"translate(100 266) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-20\" y2=\"-42\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-20\" cy=\"-42\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#2F7A7E\"/><line x1=\"12\" y1=\"-80\" x2=\"72\" y2=\"-140\" stroke=\"#2F7A7E\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"-140\" r=\"5.5\" fill=\"#4A2C17\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#4A2C17\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#4A2C17\"/><circle cx=\"0\" cy=\"-122\" r=\"8\" fill=\"#120B06\"/><path d=\"M-14 -103 A14 14 0 0 1 14 -103 Q0 -97 -14 -103 Z\" fill=\"#120B06\"/></g></g><rect x=\"270\" y=\"226\" width=\"12\" height=\"40\" fill=\"#8E6240\"/><rect x=\"250\" y=\"214\" width=\"44\" height=\"12\" rx=\"4\" fill=\"#8E6240\"/><g class=\"a-in-right\"><g transform=\"translate(272 266) scale(-1 1)\"><rect x=\"-12\" y=\"-50\" width=\"46\" height=\"13\" rx=\"6\" fill=\"#5B6573\"/><rect x=\"24\" y=\"-50\" width=\"11\" height=\"50\" rx=\"5\" fill=\"#5B6573\"/><rect x=\"24\" y=\"-5\" width=\"19\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-6\" y1=\"-84\" x2=\"34\" y2=\"-64\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"34\" cy=\"-64\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-16\" y=\"-96\" width=\"32\" height=\"54\" rx=\"13\" fill=\"#C9A227\"/><line x1=\"8\" y1=\"-84\" x2=\"44\" y2=\"-66\" stroke=\"#C9A227\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"44\" cy=\"-66\" r=\"5.5\" fill=\"#B87A45\"/><rect x=\"-5\" y=\"-102\" width=\"10\" height=\"9\" fill=\"#B87A45\"/><g transform=\"translate(0 6)\"><circle cx=\"0\" cy=\"-110\" r=\"13.5\" fill=\"#B87A45\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#1C1410\"/></g></g></g><g class=\"a-fade\" style=\"--d:2.2s\"><rect x=\"208\" y=\"186\" width=\"34\" height=\"24\" rx=\"3\" fill=\"#FFFFFF\" transform=\"rotate(8 225 198)\"/><line x1=\"214\" y1=\"194\" x2=\"236\" y2=\"197\" stroke=\"#D3DEEC\" stroke-width=\"2\"/><line x1=\"213\" y1=\"201\" x2=\"232\" y2=\"204\" stroke=\"#D3DEEC\" stroke-width=\"2\"/></g></g></svg>", "communication": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a speaker steps up to the podium, the audience settles in, and sound waves pulse from a speech bubble\"><defs><clipPath id=\"clip7\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip7)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><rect x=\"0\" y=\"250\" width=\"400\" height=\"50\" fill=\"#C7D5E7\"/><g class=\"a-pop a-origin-bl\" style=\"--d:1s\"><path d=\"M300 40 Q334 40 334 66 Q334 92 300 92 L290 92 L278 106 L280 92 Q248 90 248 66 Q248 40 300 40 Z\" fill=\"#FFFFFF\"/><g class=\"a-bar\" style=\"--d:1.4s\"><line x1=\"270\" y1=\"58\" x2=\"270\" y2=\"76\" stroke=\"#2F7A7E\" stroke-width=\"5\" stroke-linecap=\"round\"/></g><g class=\"a-bar\" style=\"--d:1.52s\"><line x1=\"282\" y1=\"52\" x2=\"282\" y2=\"82\" stroke=\"#2F7A7E\" stroke-width=\"5\" stroke-linecap=\"round\"/></g><g class=\"a-bar\" style=\"--d:1.64s\"><line x1=\"294\" y1=\"58\" x2=\"294\" y2=\"76\" stroke=\"#2F7A7E\" stroke-width=\"5\" stroke-linecap=\"round\"/></g><g class=\"a-bar\" style=\"--d:1.7599999999999998s\"><line x1=\"306\" y1=\"50\" x2=\"306\" y2=\"84\" stroke=\"#2F7A7E\" stroke-width=\"5\" stroke-linecap=\"round\"/></g><g class=\"a-bar\" style=\"--d:1.88s\"><line x1=\"318\" y1=\"60\" x2=\"318\" y2=\"74\" stroke=\"#2F7A7E\" stroke-width=\"5\" stroke-linecap=\"round\"/></g></g><g class=\"a-rise\" style=\"--d:0.2s\"><g transform=\"translate(200 236) scale(1 1)\"><rect x=\"-11\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"2\" y=\"-40\" width=\"9\" height=\"40\" rx=\"4\" fill=\"#1B2A41\"/><rect x=\"-14\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><rect x=\"1\" y=\"-5\" width=\"13\" height=\"6\" rx=\"3\" fill=\"#22303F\"/><line x1=\"-12\" y1=\"-80\" x2=\"-24\" y2=\"-60\" stroke=\"#1B2A41\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"-24\" cy=\"-60\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-16\" y=\"-90\" width=\"32\" height=\"56\" rx=\"13\" fill=\"#1B2A41\"/><line x1=\"12\" y1=\"-80\" x2=\"52\" y2=\"-126\" stroke=\"#1B2A41\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"52\" cy=\"-126\" r=\"5.5\" fill=\"#7B4A26\"/><rect x=\"-5\" y=\"-96\" width=\"10\" height=\"9\" fill=\"#7B4A26\"/><circle cx=\"0\" cy=\"-104\" r=\"13.5\" fill=\"#7B4A26\"/><path d=\"M-14 -102 A14 14 0 0 1 14 -102 Q0 -96 -14 -102 Z\" fill=\"#120B06\"/></g></g><path d=\"M164 160 L236 160 L228 236 L172 236 Z\" fill=\"#C9A227\"/><rect x=\"156\" y=\"152\" width=\"88\" height=\"12\" rx=\"4\" fill=\"#A88616\"/><rect x=\"186\" y=\"186\" width=\"28\" height=\"28\" rx=\"14\" fill=\"#1B2A41\" opacity=\"0.25\"/><g class=\"a-bob\" style=\"--d:0.5s\"><g transform=\"translate(40 318)\"><rect x=\"-26\" y=\"-58\" width=\"52\" height=\"60\" rx=\"22\" fill=\"#D2694F\"/><g transform=\"translate(0 -6)\"><circle cx=\"0\" cy=\"-76\" r=\"17\" fill=\"#E0AC69\"/></g></g></g><g class=\"a-bob\" style=\"--d:0.65s\"><g transform=\"translate(100 318)\"><rect x=\"-26\" y=\"-58\" width=\"52\" height=\"60\" rx=\"22\" fill=\"#2F7A7E\"/><g transform=\"translate(0 -6)\"><circle cx=\"0\" cy=\"-79\" r=\"21\" fill=\"#1C1410\"/><circle cx=\"0\" cy=\"-76\" r=\"17\" fill=\"#4A2C17\"/></g></g></g><g class=\"a-bob\" style=\"--d:0.8s\"><g transform=\"translate(300 318)\"><rect x=\"-26\" y=\"-58\" width=\"52\" height=\"60\" rx=\"22\" fill=\"#6B4C8A\"/><g transform=\"translate(0 -6)\"><circle cx=\"0\" cy=\"-76\" r=\"17\" fill=\"#B87A45\"/></g></g></g><g class=\"a-bob\" style=\"--d:0.95s\"><g transform=\"translate(360 318)\"><rect x=\"-26\" y=\"-58\" width=\"52\" height=\"60\" rx=\"22\" fill=\"#4C8C5A\"/><g transform=\"translate(0 -6)\"><circle cx=\"0\" cy=\"-76\" r=\"17\" fill=\"#9C5F33\"/></g></g></g><g class=\"a-twinkle\" style=\"--d:2s\"><path d=\"M120 63 L122.1 67.9 L127 70 L122.1 72.1 L120 77 L117.9 72.1 L113 70 L117.9 67.9 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:2.4s\"><path d=\"M84 106 L85.2 108.8 L88 110 L85.2 111.2 L84 114 L82.8 111.2 L80 110 L82.8 108.8 Z\" fill=\"#2F7A7E\"/></g></g></svg>", "challenge": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\" role=\"img\" aria-label=\"Animated scene: a sticky note that reads Today I will drops in and fills with lines, a seven-day calendar appears, and a check mark draws itself\"><defs><clipPath id=\"clip8\"><rect width=\"400\" height=\"300\" rx=\"22\"/></clipPath></defs><g clip-path=\"url(#clip8)\"><rect width=\"400\" height=\"300\" fill=\"#E6EDF6\"/><g class=\"a-drop\" style=\"--d:0.1s\"><g transform=\"rotate(-5 160 150)\"><rect x=\"66\" y=\"58\" width=\"180\" height=\"170\" rx=\"6\" fill=\"#F6D365\"/><rect x=\"66\" y=\"58\" width=\"180\" height=\"22\" rx=\"6\" fill=\"#E9C24F\"/><text x=\"84\" y=\"112\" font-family=\"'Source Sans 3', Arial, Helvetica, sans-serif\" font-size=\"22\" font-weight=\"700\" fill=\"#1B2A41\">Today I will:</text><g class=\"a-type\" style=\"--d:0.8s\"><line x1=\"84\" y1=\"142\" x2=\"226\" y2=\"142\" stroke=\"#1B2A41\" stroke-width=\"3\" opacity=\"0.35\"/></g><g class=\"a-type\" style=\"--d:1.2s\"><line x1=\"84\" y1=\"170\" x2=\"226\" y2=\"170\" stroke=\"#1B2A41\" stroke-width=\"3\" opacity=\"0.35\"/></g><g class=\"a-type\" style=\"--d:1.6s\"><line x1=\"84\" y1=\"198\" x2=\"190\" y2=\"198\" stroke=\"#1B2A41\" stroke-width=\"3\" opacity=\"0.35\"/></g></g></g><g class=\"a-pop\" style=\"--d:1.9s\"><rect x=\"262\" y=\"92\" width=\"112\" height=\"124\" rx=\"12\" fill=\"#FFFFFF\"/><rect x=\"262\" y=\"92\" width=\"112\" height=\"32\" rx=\"12\" fill=\"#1B2A41\"/><rect x=\"262\" y=\"112\" width=\"112\" height=\"12\" fill=\"#1B2A41\"/><circle cx=\"290\" cy=\"92\" r=\"5\" fill=\"#C9A227\"/><circle cx=\"346\" cy=\"92\" r=\"5\" fill=\"#C9A227\"/><text x=\"318\" y=\"182\" text-anchor=\"middle\" font-family=\"'Source Sans 3', Arial, Helvetica, sans-serif\" font-size=\"54\" font-weight=\"700\" fill=\"#1B2A41\">7</text><text x=\"318\" y=\"204\" text-anchor=\"middle\" font-family=\"'Source Sans 3', Arial, Helvetica, sans-serif\" font-size=\"16\" font-weight=\"700\" fill=\"#5B6573\">DAYS</text></g><g class=\"a-pop\" style=\"--d:2.6s\"><circle cx=\"352\" cy=\"232\" r=\"24\" fill=\"#2F7A7E\"/></g><path class=\"a-draw\" style=\"--d:2.9s\" pathLength=\"1\" d=\"M340 232 L349 241 L365 223\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g class=\"a-twinkle\" style=\"--d:3.1s\"><path d=\"M48 37 L50.1 41.9 L55 44 L50.1 46.1 L48 51 L45.9 46.1 L41 44 L45.9 41.9 Z\" fill=\"#C9A227\"/></g><g class=\"a-twinkle\" style=\"--d:3.3s\"><path d=\"M256 49 L257.5 52.5 L261 54 L257.5 55.5 L256 59 L254.5 55.5 L251 54 L254.5 52.5 Z\" fill=\"#2F7A7E\"/></g></g></svg>"};
+
+const GIFTS = [
+  {
+    name: 'Empathy', illo: 'empathy',
+    jobs: [{ t: 'Program Manager', why: 'Keeps participants and staff heard so programs meet real needs.' }, { t: 'Case Manager', why: 'Understands each client\u2019s situation before building a plan.' }],
+    def: 'Empathy means understanding what someone feels and letting them know you see it. When you encourage with empathy, people feel heard before they feel pushed.',
+    hook: 'Feel first, then fix.',
+    reflect: 'Who in your life noticed how you were feeling before you said a word?',
+    actions: [
+      { t: 'Complete a Mental Health First Aid certification', h: 'Finish the course within the next 90 days.' },
+      { t: 'Attend a listening or trauma-informed care workshop', h: 'One workshop or webinar each quarter.' },
+      { t: 'Create a check-in form for mentees and teammates', h: 'Review the responses every two weeks.' },
+      { t: 'Shadow a case manager or program manager', h: 'Spend one full day seeing how they support the people they serve.' },
+      { t: 'Hold monthly one-on-ones with mentees', h: 'Log one concern raised and one follow-up action from each.' }
+    ],
+    narr: 'Gift one is Empathy. Empathy means you understand what someone feels, and you let them know you see it. You see it in program managers and case managers. The memory hook: Feel first, then fix. Here is my bucket list. First, complete a Mental Health First Aid certification within ninety days. Second, attend a listening or trauma-informed care workshop each quarter. Third, create a check-in form for mentees and review it every two weeks. Fourth, shadow a case manager or program manager for a full day. Fifth, hold monthly one-on-ones and log one concern and one follow-up from each.',
+    cue: 'Point to the two jobs and ask who has worked with a case manager or program manager. Then reveal each action as you narrate it.'
+  },
+  {
+    name: 'Confidence', illo: 'confidence',
+    jobs: [{ t: 'Life Coach', why: 'Helps clients see what they can already do and take the next step.' }, { t: 'Physical Trainer', why: 'Pushes clients past doubt one rep at a time.' }],
+    def: 'Confidence is the steady belief that you can do the work before you have proof. When you encourage with confidence, you help people see the strength they already carry.',
+    hook: 'Stand tall, start small.',
+    reflect: 'What is one ability you have that you rarely give yourself credit for?',
+    actions: [
+      { t: 'Enroll in an introductory coaching course', h: 'Finish it within 60 days.' },
+      { t: 'Set three 30-day skill goals', h: 'Track progress weekly in a shared tracker.' },
+      { t: 'Volunteer to lead a cohort session or stand-up', h: 'Lead one each month.' },
+      { t: 'Keep a wins journal', h: 'Review it with a mentor once a month.' },
+      { t: 'Earn one industry certification this year', h: 'For example, CompTIA Security+.' }
+    ],
+    narr: 'Gift two is Confidence. Confidence is the steady belief that you can do the work before you have proof. Life coaches and physical trainers build it in others every day. The memory hook: Stand tall, start small. Here is how I will build it. First, enroll in an introductory coaching course and finish it within sixty days. Second, set three thirty-day skill goals and track them weekly. Third, volunteer to lead one cohort session or stand-up each month. Fourth, keep a wins journal and review it with a mentor monthly. Fifth, earn one industry certification this year, such as CompTIA Security Plus.',
+    cue: 'Point to the two jobs, then ask for a show of hands: who is working toward a certification right now? Reveal the actions.'
+  },
+  {
+    name: 'Trust', illo: 'trust',
+    jobs: [{ t: 'Doctor', why: 'Patients share the full story when they trust their doctor.' }, { t: 'Psychiatrist', why: 'People open up only when they feel safe and respected.' }],
+    def: 'Trust is the belief that someone will be honest, consistent, and safe with you. When you encourage with trust, you give people a reason to believe you will keep your word.',
+    hook: 'Keep the promise, keep the bond.',
+    reflect: 'Who keeps their word with you, and what do they do that earns it?',
+    actions: [
+      { t: 'Complete a confidentiality and data privacy training', h: 'Finish it within 60 days.' },
+      { t: 'Build a commitment tracker', h: 'Report the status of every open commitment weekly.' },
+      { t: 'Request 360-degree feedback', h: 'Ask peers and mentors twice a year.' },
+      { t: 'Read one book on trust in teams', h: 'For example, The Speed of Trust. Share three takeaways with your cohort.' },
+      { t: 'Conduct a retro after any missed deadline', h: 'Within 14 days, name the cause and the fix.' }
+    ],
+    narr: 'Gift three is Trust. Trust is the belief that someone will be honest, consistent, and safe with you. Doctors and psychiatrists depend on it. The memory hook: Keep the promise, keep the bond. Here is my plan. First, complete a confidentiality and data privacy training within sixty days. Second, build a commitment tracker and report on every open commitment weekly. Third, request three-sixty feedback from peers and mentors twice a year. Fourth, read a book on trust in teams and share three takeaways with the cohort. Fifth, run a retro within fourteen days of any missed deadline. Trust is built in the follow-through.',
+    cue: 'Point to the two jobs and ask why patients need to trust their doctor. Then reveal the actions.'
+  },
+  {
+    name: 'Knowledge', illo: 'knowledge',
+    jobs: [{ t: 'Scientist', why: 'Builds knowledge through testing and shares what they find.' }, { t: 'Construction Worker', why: 'Uses trade knowledge to build safely and teach the crew.' }],
+    def: 'Knowledge is understanding built through study, practice, and good questions. When you encourage with knowledge, you help people grow the skills to solve problems on their own.',
+    hook: 'Learn it, teach it, own it.',
+    reflect: 'What is one thing you learned by teaching someone else?',
+    actions: [
+      { t: 'Commit to five hours of structured learning a week', h: 'Use a platform such as TryHackMe or LinkedIn Learning.' },
+      { t: 'Attend one industry meetup or webinar a month', h: 'For example, a local ISSA or OWASP chapter event.' },
+      { t: 'Build a shared knowledge base', h: 'Add one new entry each week.' },
+      { t: 'Teach a quarterly lunch-and-learn', h: 'Fifteen minutes on something you recently learned.' },
+      { t: 'Find a subject-matter mentor', h: 'Meet monthly with prepared questions.' }
+    ],
+    narr: 'Gift four is Knowledge. Knowledge is understanding built through study, practice, and good questions. Scientists and construction workers rely on it. The memory hook: Learn it, teach it, own it. Here is my plan. First, commit to five hours of structured learning each week on a platform like TryHackMe. Second, attend one industry meetup or webinar a month, such as an ISSA or OWASP chapter event. Third, build a shared knowledge base and add one entry every week. Fourth, teach a fifteen-minute lunch-and-learn each quarter. Fifth, find a subject-matter mentor and meet monthly with prepared questions. What I learn, I pass on.',
+    cue: 'Point to the two jobs, then invite one person to name a meetup, course, or platform they use to learn. Reveal the actions.'
+  },
+  {
+    name: 'Communication', illo: 'communication',
+    jobs: [{ t: 'Public Speaker', why: 'Turns ideas into messages that move a room.' }, { t: 'Pastor or Spiritual Leader', why: 'Encourages a community through clear, caring words.' }],
+    def: 'Communication is sharing a clear message in a way others can receive and act on. When you encourage with communication, your words lift people up and point them toward action.',
+    hook: 'Say it clear, say it kind.',
+    reflect: 'Think of feedback that helped you. What made it land?',
+    actions: [
+      { t: 'Join Toastmasters or a similar speaking club', h: 'Deliver one prepared speech each month.' },
+      { t: 'Attend a facilitation course or webinar', h: 'Focus on presenting to adult learners.' },
+      { t: 'Record and review every presentation', h: 'Within 48 hours, using a self-rating checklist.' },
+      { t: 'Send a feedback form after every talk', h: 'Send it to the audience the same day.' },
+      { t: 'Publish one LinkedIn post a month', h: 'Share what you are learning.' }
+    ],
+    narr: 'Gift five is Communication. Communication is sharing a clear message in a way others can receive and act on. Public speakers and pastors lead with it. The memory hook: Say it clear, say it kind. Here is my plan. First, join Toastmasters or a similar club and deliver one prepared speech each month. Second, attend a facilitation course focused on adult learners. Third, record every presentation and review it within forty-eight hours. Fourth, send a feedback form to the audience the same day as every talk. Fifth, publish one LinkedIn post a month about what I am learning. Clear words move people to act.',
+    cue: 'Point to the two jobs and ask the room what makes a speaker easy to follow. Reveal the actions, then point to the one they could start this month.'
+  }
+];
+
+const TITLES = ['Title', 'Why it matters', 'Empathy', 'Confidence', 'Trust', 'Knowledge', 'Communication', 'Your challenge', 'Practice quiz'];
+const N = TITLES.length;
+const MAX = [0, 2, 5, 5, 5, 5, 5, 0, 0];
+const QUIZ = [
+  { gift: 'Empathy', q: 'Which bucket-list item belongs under Empathy?', opts: ['Earn an industry certification such as CompTIA Security+', 'Complete a Mental Health First Aid certification', 'Publish one LinkedIn post a month', 'Build a commitment tracker'], a: 1, why: 'Mental Health First Aid builds skills for noticing and responding to what someone is going through, which is the heart of empathy.' },
+  { gift: 'Confidence', q: 'Which action is on the Confidence list?', opts: ['Keep a wins journal and review it with a mentor monthly', 'Read one book on trust in teams', 'Send a feedback form after every talk', 'Shadow a case manager for a full day'], a: 0, why: 'Reviewing your wins with a mentor gives you a record of what you can already do.' },
+  { gift: 'Trust', q: 'How soon does the Trust plan call for a retro after a missed deadline?', opts: ['Within 48 hours', 'Within 14 days', 'At the end of the year', 'Only if someone asks for one'], a: 1, why: 'The plan sets 14 days so the cause and the fix are named while the details are still fresh.' },
+  { gift: 'Knowledge', q: 'How many hours a week does the Knowledge plan commit to structured learning?', opts: ['One hour', 'Three hours', 'Five hours', 'Ten hours'], a: 2, why: 'The plan commits to five hours a week on a platform like TryHackMe, which makes progress easy to schedule and track.' },
+  { gift: 'Communication', q: 'When does the Communication plan say to review a recording of your presentation?', opts: ['Within 48 hours', 'After one month', 'Before your annual review', 'Only when a mentor asks'], a: 0, why: 'Reviewing within 48 hours lets you note what to keep and what to change while the talk is still fresh.' }
+];
+let qIdx = 0;
+const qState = new Array(QUIZ.length).fill(null);
+
+const SLIDE_NOTES = [
+  { narr: 'Welcome. Today we are talking about one word: Encourage. Encouragement is not a pep talk you give once a year. It is a set of skills you can practice on purpose. Think of it as the way we understand people, build their confidence, earn their trust, share what we know, and communicate with care. Over the next few minutes, you will meet five gifts, and for each one, five actions you can start this week. Click Start when you are ready. By the end, you will have a plan, not just an idea.', cue: 'Pause and let the word sit for three seconds. Then click Start.' },
+  { narr: 'Here is why this matters. Think about the last time someone believed in you before you believed in yourself. Maybe it was a coach, a teacher, or a friend. That moment probably changed what you did next. Teams work the same way. When people feel encouraged, they speak up sooner, take smarter risks, and recover faster from mistakes. Encouragement is not soft. It is leadership with a purpose. Now, let us look at the five gifts that make encouragement real: Empathy, Confidence, Trust, Knowledge, and Communication.', cue: 'Ask two or three people to share a moment aloud. Click once to reveal the core message, then again to reveal the five gifts.' },
+  null, null, null, null, null,
+  { narr: 'Here is your challenge, and it is a small one on purpose. Look at the five gifts you just saw. Choose the one you most want to strengthen. Then pick one action from that gift and take the first step today. Write it on a sticky note and place it where you will see it every morning. Give yourself seven days, then report back to a mentor or teammate with one sentence: what you started and what changed. Encouragement is a practice, not a personality. Five gifts, twenty-five actions, one choice. Go encourage someone today.', cue: 'Ask each person to pick one gift and one action. Give thirty seconds of silence, then click their choice together.' },
+  { narr: 'Supplementary practice quiz. This section sits after the eight narrated slides and is not part of the narration. Click an answer to reveal whether it is correct and why.', cue: 'Presenter-led option: read the question aloud, give the room ten seconds, then click an answer. Use the reveal button if you prefer to show the answer first.' }
+];
+GIFTS.forEach((g, i) => { SLIDE_NOTES[i + 2] = { narr: g.narr, cue: g.cue }; });
+
+const BRIEFCASE = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>';
+const PLAY_ICON = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.5v9l8-4.5z"/></svg>';
+let lastPlayed = -1;
+function playArt(el) {
+  el.classList.remove('play');
+  void el.getBoundingClientRect();
+  el.classList.add('play');
+}
+const stage = document.getElementById('stage');
+const giftsHost = document.getElementById('gifts');
+const reveal = new Array(N).fill(0);
+let cur = 0;
+
+function giftSection(g, idx) {
+  const n = idx - 1;
+  const cards = g.actions.map((a, k) =>
+    '<button class="card" type="button" data-stage="' + (k + 1) + '" data-action-reveal="' + (k + 1) + '">' +
+      '<span class="num">' + (k + 1) + '</span>' +
+      '<span class="ctext"><strong>' + a.t + '</strong><span>' + a.h + '</span></span>' +
+    '</button>').join('');
+  return '<section class="slide" data-slide="' + idx + '" aria-label="' + g.name + '" hidden>' +
+    '<div class="gift-grid">' +
+      '<div class="gift-panel">' +
+        '<div class="art" data-illo="' + g.illo + '"></div>' +
+        '<p class="kicker">Gift ' + n + ' of 5</p>' +
+        '<h2>' + g.name + '</h2>' +
+        '<p class="def">' + g.def + '</p>' +
+        '<p class="hook"><span>Memory hook</span>' + g.hook + '</p>' +
+        '<div class="reflect"><span>Reflect</span>' + g.reflect + '</div>' +
+      '</div>' +
+      '<div class="actions">' +
+        '<div class="jobs"><p class="kicker">Where this gift shows up</p><div class="job-row">' +
+          g.jobs.map(j => '<div class="job"><span class="job-icon">' + BRIEFCASE + '</span><span class="job-text"><strong>' + j.t + '</strong><span>' + j.why + '</span></span></div>').join('') +
+        '</div></div>' +
+        '<p class="kicker">My bucket list: five actions to grow this gift</p>' +
+        '<p class="hint">Click a card or press Next to reveal the next action.</p>' +
+        cards +
+      '</div>' +
+    '</div>' +
+  '</section>';
+}
+giftsHost.innerHTML = GIFTS.map((g, i) => giftSection(g, i + 2)).join('');
+document.querySelectorAll('[data-illo]').forEach(el => { el.innerHTML = (ILLOS[el.dataset.illo] || '') + '<button class="art-play" type="button" aria-label="Replay this scene">' + PLAY_ICON + 'Replay</button>'; });
+
+const slides = Array.from(stage.querySelectorAll('.slide'));
+slides.sort((a, b) => +a.dataset.slide - +b.dataset.slide);
+slides.forEach(s => stage.appendChild(s));
+
+const progress = document.getElementById('progress');
+TITLES.forEach((t, i) => {
+  if (i === 8) { const sep = document.createElement('span'); sep.className = 'sep'; sep.setAttribute('aria-hidden', 'true'); progress.appendChild(sep); }
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('aria-label', i < 8 ? 'Slide ' + (i + 1) + ': ' + t : 'Supplementary: ' + t);
+  b.dataset.goto = i;
+  progress.appendChild(b);
+});
+
+const menuList = document.getElementById('menuList');
+TITLES.forEach((t, i) => {
+  if (i === 0 || i === 8) {
+    const l = document.createElement('p');
+    l.className = 'menu-label';
+    l.textContent = i === 0 ? 'Narrated presentation' : 'Supplementary';
+    menuList.appendChild(l);
+  }
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = i < 8 ? (i + 1) + '. ' + t : t;
+  b.dataset.goto = i;
+  menuList.appendChild(b);
+});
+
+const pickGifts = document.getElementById('pickGifts');
+const pickActions = document.getElementById('pickActions');
+const commit = document.getElementById('commit');
+GIFTS.forEach((g, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = g.name;
+  b.setAttribute('aria-pressed', 'false');
+  b.dataset.pickGift = i;
+  pickGifts.appendChild(b);
+});
+
+function chooseGift(i) {
+  pickGifts.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
+  pickActions.innerHTML = '';
+  GIFTS[i].actions.forEach((a, k) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pick-action';
+    b.textContent = a.t;
+    b.setAttribute('aria-pressed', 'false');
+    b.dataset.pickAction = i + '-' + k;
+    pickActions.appendChild(b);
+  });
+  commit.textContent = 'Pick one action from ' + GIFTS[i].name + ' and take the first step today.';
+}
+
+function chooseAction(gi, ai) {
+  pickActions.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.pickAction === gi + '-' + ai)));
+  const a = GIFTS[gi].actions[ai];
+  commit.innerHTML = '<strong>Today I will start:</strong> ' + a.t + '. ' + a.h + '<br>I will report back in seven days with one sentence about what changed.';
+}
+
+function applyStages() {
+  slides.forEach(s => {
+    const idx = +s.dataset.slide;
+    s.hidden = idx !== cur;
+    s.querySelectorAll('[data-stage]').forEach(el => {
+      el.classList.toggle('is-in', +el.dataset.stage <= reveal[idx]);
+    });
+  });
+}
+
+function renderQuiz() {
+  const host = document.getElementById('quizHost');
+  const q = QUIZ[qIdx];
+  const st = qState[qIdx];
+  document.getElementById('qcount').textContent = 'Question ' + (qIdx + 1) + ' of ' + QUIZ.length + ': ' + q.gift;
+  let html = '<p class="qq">' + q.q + '</p><div class="qopts" role="group" aria-label="Answer options">';
+  q.opts.forEach((o, i) => {
+    let state = '';
+    if (st !== null) {
+      if (i === q.a) state = 'right';
+      else if (i === st) state = 'wrong';
+    }
+    html += '<button class="qopt" type="button" data-qopt="' + i + '"' + (state ? ' data-state="' + state + '"' : '') + '>' +
+      String.fromCharCode(65 + i) + '. ' + o + (state === 'right' ? ' (correct)' : state === 'wrong' ? ' (your choice)' : '') +
+      '</button>';
+  });
+  html += '</div><div class="qfeed" role="status">';
+  if (st === null) {
+    html += '<button class="nav ghost" type="button" data-reveal-q="1">Reveal answer</button>';
+  } else {
+    const verdict = st === q.a ? 'Correct.' : 'Not quite. The correct answer is ' + String.fromCharCode(65 + q.a) + '.';
+    html += '<strong>' + verdict + '</strong>' + q.why;
+  }
+  html += '</div>';
+  host.innerHTML = html;
+  document.getElementById('qend').hidden = !(qIdx === QUIZ.length - 1 && qState[qIdx] !== null);
+}
+
+function render() {
+  applyStages();
+  if (cur !== lastPlayed) {
+    lastPlayed = cur;
+    const active = slides.find(s => +s.dataset.slide === cur);
+    if (active) active.querySelectorAll('.art').forEach(playArt);
+  }
+  progress.querySelectorAll('button').forEach(b => {
+    if (+b.dataset.goto === cur) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+  });
+  document.getElementById('count').textContent = cur < 8
+    ? 'Slide ' + (cur + 1) + ' of 8: ' + TITLES[cur]
+    : 'Supplementary: ' + TITLES[cur];
+  if (cur === 8) renderQuiz();
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const atEnd = cur === 8 && qIdx === QUIZ.length - 1;
+  const nextBtn = document.getElementById('nextBtn');
+  nextBtn.disabled = atEnd;
+  nextBtn.textContent = atEnd ? 'Done' : 'Next';
+  const notes = SLIDE_NOTES[cur];
+  document.getElementById('notesBody').innerHTML = '<div class="cue"><span>Presenter cue</span>' + notes.cue + '</div><p>' + notes.narr + '</p>';
+  const target = slides.find(s => +s.dataset.slide === cur);
+  if (target) target.scrollTop = 0;
+}
+
+function go(n, mode) {
+  cur = Math.max(0, Math.min(N - 1, n));
+  reveal[cur] = mode === 'end' ? MAX[cur] : 0;
+  if (cur === 8) qIdx = mode === 'end' ? QUIZ.length - 1 : 0;
+  render();
+}
+function next() {
+  if (cur === 8) { if (qIdx < QUIZ.length - 1) { qIdx++; render(); } return; }
+  if (reveal[cur] < MAX[cur]) { reveal[cur]++; render(); return; }
+  if (cur < N - 1) go(cur + 1, 'start');
+}
+function prev() {
+  if (cur === 8 && qIdx > 0) { qIdx--; render(); return; }
+  if (cur > 0) go(cur - 1, 'end');
+}
+function revealTo(k) { if (k > reveal[cur]) { reveal[cur] = k; render(); } }
+function answerQ(i) { if (qState[qIdx] === null) { qState[qIdx] = i; renderQuiz(); } }
+function revealQ() { if (qState[qIdx] === null) { qState[qIdx] = QUIZ[qIdx].a; renderQuiz(); } }
+
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+
+document.addEventListener('click', e => {
+  const art = e.target.closest('.art');
+  if (art) { playArt(art); return; }
+  const t = e.target.closest('button');
+  if (!t) return;
+  if (t.dataset.goto !== undefined) { go(+t.dataset.goto, 'start'); if (t.closest('.sheet')) closeSheets(); return; }
+  if (t.dataset.gift !== undefined) { go(+t.dataset.gift, 'start'); return; }
+  if (t.dataset.actionReveal !== undefined) { revealTo(+t.dataset.actionReveal); return; }
+  if (t.dataset.pickGift !== undefined) { chooseGift(+t.dataset.pickGift); return; }
+  if (t.dataset.pickAction !== undefined) { const [g, a] = t.dataset.pickAction.split('-').map(Number); chooseAction(g, a); return; }
+  if (t.dataset.qopt !== undefined) { answerQ(+t.dataset.qopt); return; }
+  if (t.dataset.revealQ !== undefined) { revealQ(); return; }
+  if (t.hasAttribute('data-close')) { closeSheets(); return; }
+});
+
+function openSheet(id, btn) { document.getElementById(id).hidden = false; btn.setAttribute('aria-expanded', 'true'); }
+function closeSheets() {
+  document.getElementById('menu').hidden = true;
+  document.getElementById('notes').hidden = true;
+  document.getElementById('notesBtn').setAttribute('aria-expanded', 'false');
+}
+document.getElementById('menuBtn').addEventListener('click', () => openSheet('menu', document.getElementById('menuBtn')));
+document.getElementById('notesBtn').addEventListener('click', () => {
+  if (document.getElementById('notes').hidden) openSheet('notes', document.getElementById('notesBtn'));
+  else closeSheets();
+});
+
+window.addEventListener('keydown', e => {
+  const sheetOpen = !document.getElementById('menu').hidden || !document.getElementById('notes').hidden;
+  if (e.key === 'Escape') { closeSheets(); return; }
+  if (sheetOpen) return;
+  if (e.target.tagName === 'BUTTON' && (e.key === ' ' || e.key === 'Enter')) return;
+  if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+  else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+  else if (e.key === 'h' || e.key === 'H') { go(0, 'start'); }
+  else if (e.key === 'm' || e.key === 'M') { openSheet('menu', document.getElementById('menuBtn')); }
+  else if (e.key === 'n' || e.key === 'N') { document.getElementById('notesBtn').click(); }
+});
+
+go(0, 'start');
+</script>
+
+</body>
+</html>
